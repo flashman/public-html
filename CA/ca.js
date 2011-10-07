@@ -23,7 +23,9 @@ $(document).ready( function(){
 				r = hist[hPos]
 			}
 			$('input[type="val"]').val(r)
-			$('#message').text('Rule ' + r); 
+			$('#message').text('Rule ' + r);
+			$('#input').hide();
+			$('#message').show();
 			ca(r); 
 		});
 		
@@ -32,7 +34,9 @@ $(document).ready( function(){
 				hPos-=1;
 				var r = hist[hPos];
 				$('#message').text('Rule ' + r);
-				$('input[type="val"]').val(r)
+				$('input[type="val"]').val(r);
+				$('#input').hide();
+				$('#message').show();				
 				ca(r);
 			}
 		});
