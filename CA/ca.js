@@ -3,12 +3,12 @@ $(document).ready( function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
     var t; // timeout 
-    var X = 350, Y = 800, d = 2;
-		var states = 2;
-    var ruleLength = 5; //odd
-		var ruleCount = m.pow(2,ruleLength);
-		var totalRules = m.pow(2, ruleCount)
-		var hist = [], hPos=-1;
+    var X = 512, Y = 400, d = 2;
+	var states = 2;
+    var ruleLength = 3; //odd
+	var ruleCount = m.pow(2,ruleLength);
+	var totalRules = m.pow(2, ruleCount)
+	var hist = [], hPos=-1;
 
 
     $('#next').click(function(){
@@ -51,6 +51,14 @@ $(document).ready( function(){
 				hPos+=1;
 				var r = $('input[type="val"]').val()
 				r = parseInt(r);
+				if(r > -1 || r < 1){
+					if(r<0 || r>=totalRules){
+						r = m.round(m.random() * totalRules)-1;
+					}
+				}
+				else{
+					r = "random";
+				}
 				hist.push(r);
 				$('#message').text('Rule ' + r);
 				$('#input').hide();
@@ -62,13 +70,16 @@ $(document).ready( function(){
 
     function ca(n){
         ctx.clearRect(0, 0, X*d, Y*d);
-        var j=0, cellRow = [], rule = generateRule(n);
+        var rn = (n == "random" ? m.round(m.random() * totalRules)-1 : n );
+        var j=0, cellRow = [], rule = generateRule(rn) ;
         cellRow[j] = new CellRow(X,j);
         cellRow[j].draw();
         draw();
         
         function draw(){
             for(j=1;j<Y;j++){
+            	rn = (n == "random" ? m.round(m.random() * totalRules)-1 : rn );
+            	rule = generateRule(rn);
                 cellRow[j] = applyRule(cellRow[j-1], rule);
                 cellRow[j].draw();
             }
@@ -132,7 +143,6 @@ $(document).ready( function(){
         $.each(rule,function(i,val){
             rule[i] = parseInt(val);
         });
-				console.log(rule);
         return rule; 
     }
 
@@ -162,7 +172,7 @@ $(document).ready( function(){
         this.x = x;
         this.y = y;
         this.d = d;
-        this.v = m.round(m.random()-0.49);
+        this.v = m.round(m.random()-0.4);
 
         this.draw = function(shape) {
 					if(shape=='circle'){
