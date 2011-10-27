@@ -7,9 +7,8 @@ $(document).ready( function(){
 	var states = 2;
     var ruleLength = 3; //odd
 	var ruleCount = m.pow(2,ruleLength);
-	var totalRules = m.pow(2, ruleCount)
+	var totalRules = m.pow(2, ruleCount);
 	var hist = [], hPos=-1;
-
 
     $('#next').click(function(){
 			var r=0;
@@ -53,7 +52,7 @@ $(document).ready( function(){
 				r = parseInt(r);
 				if(r > -1 || r < 1){
 					if(r<0 || r>=totalRules){
-						r = m.round(m.random() * totalRules)-1;
+						r = m.ceil(m.random() * totalRules)-1;
 					}
 				}
 				else{
@@ -66,11 +65,16 @@ $(document).ready( function(){
 				ca(r); 
 			}
 		});
+		
+		$('#canvas').click(function() {
+			var r = hist[hPos];
+			ca(r); 
+		});
 
 
     function ca(n){
         ctx.clearRect(0, 0, X*d, Y*d);
-        var rn = (n == "random" ? m.round(m.random() * totalRules)-1 : n );
+        var rn = (n == "random" ? m.ceil(m.random() * totalRules)-1 : n );
         var j=0, cellRow = [], rule = generateRule(rn) ;
         cellRow[j] = new CellRow(X,j);
         cellRow[j].draw();
@@ -78,8 +82,10 @@ $(document).ready( function(){
         
         function draw(){
             for(j=1;j<Y;j++){
-            	rn = (n == "random" ? m.round(m.random() * totalRules)-1 : rn );
-            	rule = generateRule(rn);
+            	if(n=="random"){
+            		rn = m.ceil(m.random() * totalRules)-1;
+	            	rule = generateRule(rn);
+            	}
                 cellRow[j] = applyRule(cellRow[j-1], rule);
                 cellRow[j].draw();
             }
@@ -113,11 +119,11 @@ $(document).ready( function(){
     
     function applyRule(row,rule){
         var n=row.x,i,j;
-				var rr = (ruleLength-1)/2;
+		var rr = (ruleLength-1)/2;
         var newRow = new CellRow(X,row.y +1) ;
         for (i=0;i<n;i++){
 					var sum = 0;
-					for (j=-rr; j< rr ;j++){
+					for (j=-rr; j<= rr ;j++){
 						var jj=i+j;
 						if(jj<0){ 
 							jj = n+j; 
@@ -143,6 +149,7 @@ $(document).ready( function(){
         $.each(rule,function(i,val){
             rule[i] = parseInt(val);
         });
+        console.log(n, rule)
         return rule; 
     }
 
@@ -172,7 +179,7 @@ $(document).ready( function(){
         this.x = x;
         this.y = y;
         this.d = d;
-        this.v = m.round(m.random()-0.4);
+        this.v = m.round(0.95*m.random());
 
         this.draw = function(shape) {
 					if(shape=='circle'){
