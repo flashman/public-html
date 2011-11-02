@@ -67,6 +67,7 @@ $(document).ready( function(){
 		});
 		
 		$('#canvas').click(function() {
+			console.log(hist[hPos]);
 			var r = hist[hPos];
 			ca(r); 
 		});
@@ -83,7 +84,7 @@ $(document).ready( function(){
         function draw(){
             for(j=1;j<Y;j++){
             	if(n=="random"){
-            		rn = m.ceil(m.random() * totalRules)-1;
+            		rn =  2 * m.ceil(m.random() * (totalRules/4 -1) ) + 1 ;
 	            	rule = generateRule(rn);
             	}
                 cellRow[j] = applyRule(cellRow[j-1], rule);
@@ -179,7 +180,7 @@ $(document).ready( function(){
         this.x = x;
         this.y = y;
         this.d = d;
-        this.v = m.round(0.95*m.random());
+        this.v = m.round(0.6*m.random());
 
         this.draw = function(shape) {
 					if(shape=='circle'){
