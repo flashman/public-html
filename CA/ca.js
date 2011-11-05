@@ -3,41 +3,41 @@ $(document).ready( function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
     var t; // timeout 
-    var X = 256, Y = 256, d = 4;
+    var X = 512, Y = 512, d = 2;
 	var states = 2;
-    var ruleLength = 3; //odd
-	var ruleCount = m.pow(states,ruleLength);
+    var nbhd = 3; //odd
+	var ruleCount = m.pow(states,nbhd);
 	var totalRules = m.pow(states, ruleCount);
 	var hist = [], hPos=-1;
 
 //-----------------ViewModel------------------------//
     $('#next').click(function(){
-			var r=0;
+			var r=[0];
 			if ( hPos<0 || hPos >= hist.length-1 ){
 				hPos+=1;
-				r = m.round(m.random() * totalRules)-1;
+				r = [m.round(m.random() * totalRules)-1];
 				hist.push(r);
 			}
 			else if ( hPos>=0 && hPos < hist.length-1){
 				hPos+=1;
 				r = hist[hPos]
 			}
-			$('input[type="val"]').val(r)
-			$('#message').text('Rule ' + r);
+			$('input[type="val"]').val(r.join(","))
+			$('#message').text('Rule ' + r.join(","));
 			$('#input').hide();
 			$('#message').show();
-			ca(r); 
+			CA(r); 
 		});
 		
 		$('#prev').click(function(){
 			if (hist.length>1){
 				hPos-=1;
 				var r = hist[hPos];
-				$('#message').text('Rule ' + r);
-				$('input[type="val"]').val(r);
+				$('#message').text('Rule ' + r.join(","));
+				$('input[type="val"]').val(r.join(","));
 				$('#input').hide();
 				$('#message').show();				
-				ca(r);
+				CA(r);
 			}
 		});
 		
@@ -50,45 +50,47 @@ $(document).ready( function(){
 			if(event.which==13){
 				hPos+=1;
 				var r = $('input[type="val"]').val()
-				r = parseInt(r);
-				if(r > -1 || r < 1){
-					if(r<0 || r>=totalRules){
-						r = m.ceil(m.random() * totalRules)-1;
+				console.log(r);
+				r = r.split(",");
+				$.each(r, function(i,v){
+					r[i] = parseInt(v)
+					if(r[i] > -1 || r[i] < 1){
+						if(r[i] <0 || r[i]>=totalRules){
+							r[i] = m.ceil(m.random() * totalRules)-1;
+						}					
 					}
-				}
-				else{
-					r = "random";
-				}
+					else{
+						r[i] = "random";
+					}
+				});
+				console.log(r);
 				hist.push(r);
-				$('#message').text('Rule ' + r);
+				$('#message').text('Rule ' + r.join(","));
 				$('#input').hide();
 				$('#message').show();
-				ca(r); 
+				CA(r); 
 			}
 		});
 		
 		$('#canvas').click(function() {
 			var r = hist[hPos];
-			ca(r); 
+			CA(r); 
 		});
 
 	//--------------------CA Class--------------------//
-    function ca(n){
+    function CA(n){
         ctx.clearRect(0, 0, X*d, Y*d);
-        var rn = (n == "random" ? m.ceil(m.random() * totalRules)-1 : n );
-        var j=0, cellRow = [], rule = new Rule(rn,ruleLength) ;
+        //var rn = (n == "random" ? m.ceil(m.random() * totalRules)-1 : n );
+        var j=0, cellRow = [];
+        var rules = new MultiRule(n,nbhd) ;
         cellRow[j] = new CellRow(X,j);
         cellRow[j].draw();
         draw();
-        
+
         function draw(){
-            for(j=1;j<Y;j++){
-            	if(n=="random"){
-            		rn = m.ceil(m.random() * totalRules)-1;
-	            	rule = new Rule(rn,ruleLength);
-            	}
-                cellRow[j] = rule.apply(cellRow[j-1]);
-                cellRow[j].draw();
+        	var j = 1;
+        	while(j<Y){
+				j = rules.apply(cellRow,j);
             }
         }
 
@@ -102,20 +104,19 @@ $(document).ready( function(){
     
     //-----------------Multi Rule Class--------------------//
     function MultiRule(nArray,nbhd){
-    	$this.this;
+    	$this = this;
     	this.nArray = nArray;
-    	this.nRules = this.nArray.length;
+    	this.nRules = nArray.length;
     	this.nbhd = nbhd;
-    	this.rules = [];
-    	$.each(this.nArray,function(i,val){
-    		this.rules[i] = new Rule(val,this.nbhd);		
-    	});
-    	
+    	this.rules = new Array;
+    	for(i=0;i<this.nRules;i++){
+			this.rules[i] = new Rule(this.nArray[i],this.nbhd);	
+    	}
     	this.apply = function(rowContainer,currentPos){
-    		$.each($this.rules, function(i,rule){
-    			rowConainter[currentPos+1] = rule.apply(rowContainer[i]);
-    			currentPos += 1;
+    		$.each(this.rules, function(i,rule){
+    			rowContainer[currentPos] = rule.apply(rowContainer[currentPos-1]);
     			rowContainer[currentPos].draw();
+				currentPos += 1;
     		});
     		return currentPos;
     	}
@@ -128,16 +129,16 @@ $(document).ready( function(){
     	$this = this;
         this.n = num;
         this.nbhd = nbhd;
-        this.bin = this.n.toString(states);
-        while(this.bin.length < ruleCount){
-            this.bin = '0' + this.bin ;
-        }
+        this.bin = n2bin(num);
         this.rule = generateRule();
 
         this.apply = function(row){        	
 			var n=row.x,i,j;
-			var rr = (ruleLength-1)/2;
+			var rr = (nbhd-1)/2;
 			var newRow = new CellRow(row.x,row.y +1) ;
+			if(this.n=="random"){
+				this.rule = generateRule();
+			}			
 			for (i=0;i<row.x;i++){
 				var sum = 0;
 				for (j=-rr; j<= rr ;j++){
@@ -161,13 +162,24 @@ $(document).ready( function(){
         }
 
 		//----------Rule Helper Functions---------//
+		function n2bin(n){
+			var bin = n.toString(states);
+			while(bin.length < ruleCount){
+				bin = '0' + bin ;
+        	}
+        	return bin;
+		}
+		
 		function generateRule(){
-			var a = $this.bin;
-			var rule = a.split('').reverse();
+			var bin = $this.bin;
+			if($this.n=="random"){
+				n = m.ceil(m.random() * totalRules)-1;
+				bin = n2bin(n)
+			}
+			var rule = bin.split('').reverse();
 			$.each(rule,function(i,val){
 				rule[i] = parseInt(val);
 			});
-			console.log(rule);
 			return rule;
 		}
     }
