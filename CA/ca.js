@@ -3,8 +3,11 @@ $(document).ready( function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
     var t; // timeout 
-    var X = 512, Y = 512, d = 2;
-	var states = 2;
+    var X = 512, Y = 512, d = 1;
+    canvas.setAttribute('width', ''+X)
+    canvas.setAttribute('height', ''+Y)
+    
+	var states = 3;
     var nbhd = 3; //odd
 	var ruleCount = m.pow(states,nbhd);
 	var totalRules = m.pow(states, ruleCount);
@@ -50,7 +53,6 @@ $(document).ready( function(){
 			if(event.which==13){
 				hPos+=1;
 				var r = $('input[type="val"]').val()
-				console.log(r);
 				r = r.split(",");
 				$.each(r, function(i,v){
 					r[i] = parseInt(v)
@@ -63,7 +65,6 @@ $(document).ready( function(){
 						r[i] = "random";
 					}
 				});
-				console.log(r);
 				hist.push(r);
 				$('#message').text('Rule ' + r.join(","));
 				$('#input').hide();
