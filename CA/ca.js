@@ -7,7 +7,7 @@ $(document).ready( function(){
     canvas.setAttribute('width', ''+X)
     canvas.setAttribute('height', ''+Y)
     
-	var states = 3;
+	var states = 2;
     var nbhd = 3; //odd
 	var ruleCount = m.pow(states,nbhd);
 	var totalRules = m.pow(states, ruleCount);
@@ -81,7 +81,6 @@ $(document).ready( function(){
 	//--------------------CA Class--------------------//
     function CA(n){
         ctx.clearRect(0, 0, X*d, Y*d);
-        //var rn = (n == "random" ? m.ceil(m.random() * totalRules)-1 : n );
         var j=0, cellRow = [];
         var rules = new MultiRule(n,nbhd) ;
         cellRow[j] = new CellRow(X,j);
@@ -91,13 +90,13 @@ $(document).ready( function(){
         function draw(){
         	var j = 1;
         	while(j<Y){
-				j = rules.apply(cellRow,j);
+				j = rules.next(cellRow,j);
             }
         }
 
         function animate(){
             j=j+1;
-            cellRow[j] = rule.apply(cellRow[j-1]);
+            cellRow[j] = rule.next(cellRow[j-1]);
             cellRow[j].draw();
             (j < Y ? t = setTimeout(animate,1) : clearTimeout(t) );
         }
@@ -105,21 +104,22 @@ $(document).ready( function(){
     
     //-----------------Multi Rule Class--------------------//
     function MultiRule(nArray,nbhd){
-    	$this = this;
     	this.nArray = nArray;
     	this.nRules = nArray.length;
     	this.nbhd = nbhd;
-    	this.rules = new Array;
+    	this.rules = [];
     	for(i=0;i<this.nRules;i++){
 			this.rules[i] = new Rule(this.nArray[i],this.nbhd);	
     	}
-    	this.apply = function(rowContainer,currentPos){
-    		$.each(this.rules, function(i,rule){
-    			rowContainer[currentPos] = rule.apply(rowContainer[currentPos-1]);
-    			rowContainer[currentPos].draw();
-				currentPos += 1;
-    		});
-    		return currentPos;
+    	
+    	this.next = function(rowContainer,currentPos){
+    		cp = currentPos;
+    		for(i=0;i<this.nRules;i++){
+    			rowContainer[cp] = this.rules[i].next(rowContainer[cp-1]);
+    			rowContainer[cp].draw();
+				cp = cp+1;
+    		};
+    		return cp;
     	}
     }
     
@@ -127,19 +127,18 @@ $(document).ready( function(){
     //-----------------Cell Row Rules Class----------------//
     
     function Rule(num,nbhd){
-    	$this = this;
         this.n = num;
         this.nbhd = nbhd;
         this.bin = n2bin(num);
-        this.rule = generateRule();
+        this.rule = generateRule(this.n,this.bin);
 
-        this.apply = function(row){        	
+        this.next = function(row){
 			var n=row.x,i,j;
 			var rr = (nbhd-1)/2;
 			var newRow = new CellRow(row.x,row.y +1) ;
 			if(this.n=="random"){
-				this.rule = generateRule();
-			}			
+				this.rule = generateRule(this.n,this.bin);
+			}
 			for (i=0;i<row.x;i++){
 				var sum = 0;
 				for (j=-rr; j<= rr ;j++){
@@ -152,7 +151,7 @@ $(document).ready( function(){
 					}
 					sum += row.cell[jj].v * m.pow(states, -j+rr);
 				}
-				newRow.cell[i].v = $this.rule[sum]; 
+				newRow.cell[i].v = this.rule[sum]; 
 			}
 			return newRow
         	
@@ -171,9 +170,8 @@ $(document).ready( function(){
         	return bin;
 		}
 		
-		function generateRule(){
-			var bin = $this.bin;
-			if($this.n=="random"){
+		function generateRule(n,bin){
+			if(n=="random"){
 				n = m.ceil(m.random() * totalRules)-1;
 				bin = n2bin(n)
 			}
@@ -218,7 +216,7 @@ $(document).ready( function(){
 			if(shape=='circle'){
 				ctx.strokeStyle = 'black'; 
 				ctx.beginPath();  
-				ctx.arc(this.x + d/2,this.y + d/2,this.d/2,0,Math.PI*2,true);
+				ctx.arc(this.x + this.d/2,this.y + this.d/2,this.d/2,0,Math.PI*2,true);
 				ctx.stroke();  
 				if (this.v > 0 ){
 					ctx.fillStyle = 'rgb(' + 255*(1-this.v) +',' + 255*(1-this.v) + ',' + 255*(1-this.v) + ')'; 
