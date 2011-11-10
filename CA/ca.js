@@ -3,40 +3,44 @@ $(document).ready( function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
     var t; // timeout 
-    var X = 512, Y = 400, d = 2;
+    var X = 512, Y = 512, d = 1;
+    canvas.setAttribute('width', ''+X)
+    canvas.setAttribute('height', ''+Y)
+    
 	var states = 2;
-    var ruleLength = 3; //odd
-	var ruleCount = m.pow(2,ruleLength);
-	var totalRules = m.pow(2, ruleCount);
+    var nbhd = 3; //odd
+	var ruleCount = m.pow(states,nbhd);
+	var totalRules = m.pow(states, ruleCount);
 	var hist = [], hPos=-1;
 
+//-----------------ViewModel------------------------//
     $('#next').click(function(){
-			var r=0;
+			var r=[0];
 			if ( hPos<0 || hPos >= hist.length-1 ){
 				hPos+=1;
-				r = m.round(m.random() * totalRules)-1;
+				r = [m.round(m.random() * totalRules)-1];
 				hist.push(r);
 			}
 			else if ( hPos>=0 && hPos < hist.length-1){
 				hPos+=1;
 				r = hist[hPos]
 			}
-			$('input[type="val"]').val(r)
-			$('#message').text('Rule ' + r);
+			$('input[type="val"]').val(r.join(","))
+			$('#message').text('Rule ' + r.join(","));
 			$('#input').hide();
 			$('#message').show();
-			ca(r); 
+			CA(r); 
 		});
 		
 		$('#prev').click(function(){
 			if (hist.length>1){
 				hPos-=1;
 				var r = hist[hPos];
-				$('#message').text('Rule ' + r);
-				$('input[type="val"]').val(r);
+				$('#message').text('Rule ' + r.join(","));
+				$('input[type="val"]').val(r.join(","));
 				$('#input').hide();
 				$('#message').show();				
-				ca(r);
+				CA(r);
 			}
 		});
 		
@@ -49,111 +53,138 @@ $(document).ready( function(){
 			if(event.which==13){
 				hPos+=1;
 				var r = $('input[type="val"]').val()
-				r = parseInt(r);
-				if(r > -1 || r < 1){
-					if(r<0 || r>=totalRules){
-						r = m.ceil(m.random() * totalRules)-1;
+				r = r.split(",");
+				$.each(r, function(i,v){
+					r[i] = parseInt(v)
+					if(r[i] > -1 || r[i] < 1){
+						if(r[i] <0 || r[i]>=totalRules){
+							r[i] = m.ceil(m.random() * totalRules)-1;
+						}					
 					}
-				}
-				else{
-					r = "random";
-				}
+					else{
+						r[i] = "random";
+					}
+				});
 				hist.push(r);
-				$('#message').text('Rule ' + r);
+				$('#message').text('Rule ' + r.join(","));
 				$('#input').hide();
 				$('#message').show();
-				ca(r); 
+				CA(r); 
 			}
 		});
 		
 		$('#canvas').click(function() {
 			console.log(hist[hPos]);
 			var r = hist[hPos];
-			ca(r); 
+			CA(r); 
 		});
 
-
-    function ca(n){
+	//--------------------CA Class--------------------//
+    function CA(n){
         ctx.clearRect(0, 0, X*d, Y*d);
-        var rn = (n == "random" ? m.ceil(m.random() * totalRules)-1 : n );
-        var j=0, cellRow = [], rule = generateRule(rn) ;
+        var j=0, cellRow = [];
+        var rules = new MultiRule(n,nbhd) ;
         cellRow[j] = new CellRow(X,j);
         cellRow[j].draw();
         draw();
-        
+
         function draw(){
-            for(j=1;j<Y;j++){
-            	if(n=="random"){
-            		rn =  2 * m.ceil(m.random() * (totalRules/4 -1) ) + 1 ;
-	            	rule = generateRule(rn);
-            	}
-                cellRow[j] = applyRule(cellRow[j-1], rule);
-                cellRow[j].draw();
+        	var j = 1;
+        	while(j<Y){
+				j = rules.next(cellRow,j);
             }
         }
 
         function animate(){
             j=j+1;
-            cellRow[j] = applyRule(cellRow[j-1], rule);
+            cellRow[j] = rule.next(cellRow[j-1]);
             cellRow[j].draw();
             (j < Y ? t = setTimeout(animate,1) : clearTimeout(t) );
-
         }
     }
+    
+    //-----------------Multi Rule Class--------------------//
+    function MultiRule(nArray,nbhd){
+    	this.nArray = nArray;
+    	this.nRules = nArray.length;
+    	this.nbhd = nbhd;
+    	this.rules = [];
+    	for(i=0;i<this.nRules;i++){
+			this.rules[i] = new Rule(this.nArray[i],this.nbhd);	
+    	}
+    	
+    	this.next = function(rowContainer,currentPos){
+    		cp = currentPos;
+    		for(i=0;i<this.nRules;i++){
+    			rowContainer[cp] = this.rules[i].next(rowContainer[cp-1]);
+    			rowContainer[cp].draw();
+				cp = cp+1;
+    		};
+    		return cp;
+    	}
+    }
+    
 
     //-----------------Cell Row Rules Class----------------//
     
     function Rule(num,nbhd){
         this.n = num;
         this.nbhd = nbhd;
-        this.bin = n.toString(2);
-        while(this.bin.length()<nbhd){
-            this.bin = '0' + this.bin + '0';
-        }
-        
-        function apply(){
-        }
-        
-        function disp(){
-        }
-    }
-    
-    function applyRule(row,rule){
-        var n=row.x,i,j;
-		var rr = (ruleLength-1)/2;
-        var newRow = new CellRow(X,row.y +1) ;
-        for (i=0;i<n;i++){
-					var sum = 0;
-					for (j=-rr; j<= rr ;j++){
-						var jj=i+j;
-						if(jj<0){ 
-							jj = n+j; 
-						}
-						else if(jj>=n){ 
-							jj= -1+j; 
-						}
-						sum += row.cell[jj].v * m.pow(states, -j+rr);
-					}
-					newRow.cell[i].v = rule[sum]; 
-        }
-        return newRow
-    }
-                                    
-    function generateRule(n){
-        var a = n.toString(states);
-        var l = a.length
-        while(l<ruleCount){
-            a = '0'.concat(a);
-            l++;
-        }
-        var rule = a.split('').reverse();
-        $.each(rule,function(i,val){
-            rule[i] = parseInt(val);
-        });
-        console.log(n, rule)
-        return rule; 
-    }
+        this.bin = n2bin(num);
+        this.rule = generateRule(this.n,this.bin);
 
+        this.next = function(row){
+			var n=row.x,i,j;
+			var rr = (nbhd-1)/2;
+			var newRow = new CellRow(row.x,row.y +1) ;
+			if(this.n=="random"){
+				this.rule = generateRule(this.n,this.bin);
+			}
+			for (i=0;i<row.x;i++){
+				var sum = 0;
+				for (j=-rr; j<= rr ;j++){
+					var jj=i+j;
+					if(jj<0){ 
+						jj = n+j; 
+					}
+					else if(jj>=n){ 
+						jj= -1+j; 
+					}
+					sum += row.cell[jj].v * m.pow(states, -j+rr);
+				}
+				newRow.cell[i].v = this.rule[sum]; 
+			}
+			return newRow
+        	
+        }
+        
+        this.disp = function($container){
+        		
+        }
+
+		//----------Rule Helper Functions---------//
+		function n2bin(n){
+			var bin = n.toString(states);
+			while(bin.length < ruleCount){
+				bin = '0' + bin ;
+        	}
+        	return bin;
+		}
+		
+		function generateRule(n,bin){
+			if(n=="random"){
+				n = m.ceil(m.random() * totalRules)-1;
+				bin = n2bin(n)
+			}
+			var rule = bin.split('').reverse();
+			$.each(rule,function(i,val){
+				rule[i] = parseInt(val);
+			});
+			return rule;
+		}
+    }
+        
+    
     //-----------------Cell Row Class----------------------//
 
     function CellRow(x,y){
@@ -180,26 +211,25 @@ $(document).ready( function(){
         this.x = x;
         this.y = y;
         this.d = d;
-        this.v = m.round(0.6*m.random());
+        this.v = m.round((states-1)*0.95*m.random());
 
         this.draw = function(shape) {
-					if(shape=='circle'){
-            ctx.strokeStyle = 'black'; 
-            ctx.beginPath();  
-            ctx.arc(this.x + d/2,this.y + d/2,this.d/2,0,Math.PI*2,true);
-            ctx.stroke();  
-            if (this.v > 0 ){
-                ctx.fillStyle = 'rgb(' + 255*(1-this.v) +',' + 255*(1-this.v) + ',' + 255*(1-this.v) + ')'; 
-                ctx.fill() ;
-            }
-					}
-					else if(shape=='square'){
-						if (this.v > 0 ){
-                ctx.fillStyle = 'rgb(' + 255*(1-this.v) +',' + 255*(1-this.v) + ',' + 255*(1-this.v) + ')'; 
-                ctx.fillRect(this.x ,this.y ,this.d,this.d);
-
-            }
-					}
+			if(shape=='circle'){
+				ctx.strokeStyle = 'black'; 
+				ctx.beginPath();  
+				ctx.arc(this.x + this.d/2,this.y + this.d/2,this.d/2,0,Math.PI*2,true);
+				ctx.stroke();  
+				if (this.v > 0 ){
+					ctx.fillStyle = 'rgb(' + 255*(1-this.v) +',' + 255*(1-this.v) + ',' + 255*(1-this.v) + ')'; 
+					ctx.fill() ;
+				}
+			}
+			else if(shape=='square'){
+				if (this.v > 0 ){
+                	ctx.fillStyle = "rgb(" + m.floor(255*(1-(this.v/(states-1)))) +"," + m.floor(255*(1-(this.v/(states-1)))) + "," + m.floor(255*(1-(this.v/(states-1)))) + ")"; 
+                	ctx.fillRect(this.x ,this.y ,this.d,this.d);
+            	}
+			}
         }
     } 
 })
