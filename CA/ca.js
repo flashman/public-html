@@ -74,7 +74,6 @@ $(document).ready( function(){
 		});
 		
 		$('#canvas').click(function() {
-			console.log(hist[hPos]);
 			var r = hist[hPos];
 			CA(r); 
 		});
