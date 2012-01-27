@@ -5,14 +5,14 @@ body { color: black; background-color: white;
 	font-family: "palantino","caslon","sabon","bembo",serif; }
 
 
-h1,h2,h3,h4,h5,h6,dt { 
+h1,h2,h3,h4,h5,h6,dt{ 
 	font-family: "futura","univers","helvetica",sans-serif; 
 	font-weight: bold; padding: 0px; margin: 0px; }
 h1 { font-size: 40px; text-align: center}
 h2 { font-size: 28px; text-align: center}
 h3 { font-size: 24px; text-align: center}
-p { font-family: arial; font-size: 14px; text-align: left; font-weight: normal; }
-
+p { font-family: verdana; font-size: 14px; font-weight: normal; margin-top: 0px;}
+a {text-decoration: none; color: #555555; }
 div,img { margin: 0}
 .page_width { width:691px; }
 
@@ -22,7 +22,11 @@ div,img { margin: 0}
 #nav-bar .tab  { float:left; position:relative; color: #a0a0a0; padding:10px 14px 10px 14px ;}
 #nav-bar .tab:hover  { background-color:black; color: white; }
 #nav-bar .selected  { background-color:black; color: white; }
-#body{ min-height: 280px; margin: 10px 5px; }
-#footer { height: 53px; background: url(../assets/footer.jpg); margin-top:15px; }
+
+#body{ min-height: 280px; padding: 20px 5px; }
+#body .post { padding-bottom: 25px; }
+#body .img {text-align: center; }
+
+#footer { height: 53px; background: url(../assets/footer.jpg); }
 #footer .copyright { float:right; position:relative; color: #a0a0a0; padding:19px 14px;}
 

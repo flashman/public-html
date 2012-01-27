@@ -4,15 +4,15 @@ $(document).ready( function(){
 	$(".tab").each(function(){
 		$(this).click(function(){ open(this.id); }); 
 	});
+	
 	$(window).bind( 'hashchange', function(e){
-	//	console.log(e);
 		page = getHashAndOpen();	
 	});
 
-	
+//-----------HELPERS--------------//	
 	function getHashAndOpen(){
 		hp = getHashParams();
-		if(hp["p"].length > 0){
+		if(hp["p"] && hp["p"].length > 0){
 			open(hp["p"]);
 			return hp["p"];
 		}

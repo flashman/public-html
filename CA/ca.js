@@ -3,7 +3,7 @@ $(document).ready( function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
     var t; // timeout 
-    var X = 512, Y = 512, d = 1;
+    var X = 512, Y = 1024, d = 1;
     canvas.setAttribute('width', ''+X)
     canvas.setAttribute('height', ''+Y)
     
