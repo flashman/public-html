@@ -13,6 +13,7 @@ h2 { font-size: 28px; text-align: center}
 h3 { font-size: 24px; text-align: center}
 p { font-family: verdana; font-size: 14px; font-weight: normal; margin-top: 0px;}
 a {text-decoration: none; color: #555555; }
+a:hover {background-color:black; color: white;}
 div,img { margin: 0}
 .page_width { width:691px; }
 
