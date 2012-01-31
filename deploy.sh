@@ -9,3 +9,8 @@ cd $DIR
 echo "Depoloying $TARGET to $USER@$SERVER:$TARGET..."
 scp -r public_html $USER@$SERVER:$TARGET
 echo "Deployment complete"
+
+ssh $USER@$SERVER
+rm -r public_html_old
+mv public_html public_html_old
+mv public_html_new public_html
