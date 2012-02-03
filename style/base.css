@@ -17,17 +17,25 @@ a:hover {background-color:black; color: white;}
 div,img { margin: 0}
 .page_width { width:691px; }
 
-#header {  height: 202px; background: url(../assets/header.jpg);}
-#nav-bar { height: 53px; background: url(../assets/sub-header.jpg); margin-top:10px; display: block; }
+#header {  height: 272px; background: url(../assets/dessert_c4.jpg); position:relative }
+#header #under-header {height:127px; padding-top: 145px; background: white; opacity: 0.4;
+	position:absolute; bottom: 0px; z-index: 1; }
+#header #header-container { text-align: right;  position:absolute; 
+	bottom: 0px; z-index: 2; display:inline-block; width:inherit; color: #949494; }
+#header .header-text { text-align: right; vertical-align:top;}
+#header #name {  line-height:42px; height: 43px;  }
+#header #email {  line-height:18px; height: 21px;  }
+#header #space { height:10px;  background: white;}
+#header #nav-bar { height: 53px;}
 
-#nav-bar .tab  { float:left; position:relative; color: #a0a0a0; padding:10px 14px 10px 14px ;}
-#nav-bar .tab:hover  { background-color:black; color: white; }
-#nav-bar .selected  { background-color:black; color: white; }
+#header #nav-bar .tab  { float:left; position:relative; padding:10px 14px 10px 14px ;}
+#header #nav-bar .tab:hover  { background-color:black; color: white; }
+#header #nav-bar .selected  { background-color:black; color: white; }
 
 #body{ min-height: 280px; padding: 20px 5px; }
 #body .post { padding-bottom: 25px; }
 #body .img {text-align: center; }
 
-#footer { height: 53px; background: url(../assets/footer.jpg); }
+#footer { height: 53px; background: url(../assets/dessert_c4.jpg) scroll 0 53px;}
 #footer .copyright { float:right; position:relative; color: #a0a0a0; padding:19px 14px;}
 
