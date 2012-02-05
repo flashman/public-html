@@ -25,7 +25,7 @@ div,img { margin: 0}
 #header .header-text { text-align: right; vertical-align:top;}
 #header #name {  line-height:42px; height: 43px;  }
 #header #email {  line-height:18px; height: 21px;  }
-#header #space { height:10px;  background: white;}
+#header #space { height:10px;  background: white; margin-top:115px}
 #header #nav-bar { height: 53px;}
 
 #header #nav-bar .tab  { float:left; position:relative; padding:10px 14px 10px 14px ;}
@@ -34,7 +34,7 @@ div,img { margin: 0}
 
 #body{ min-height: 280px; padding: 20px 5px; }
 #body .post { padding-bottom: 25px; }
-#body .img {text-align: center; }
+#body .media {text-align: center; }
 
 #footer { height: 53px; background: url(../assets/dessert_c4.jpg) scroll 0 53px;}
 #footer .copyright { float:right; position:relative; color: #a0a0a0; padding:19px 14px;}
