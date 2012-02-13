@@ -14,7 +14,7 @@ echo "Deployment complete"
 echo "Cleaning temp directory"
 rm -r public_html_temp/
 
-#ssh $USER@$SERVER
+ssh $USER@$SERVER
 #rm -r public_html_old
 #mv public_html public_html_old
-#mv public_html_new public_html
+#mv public_html_temp public_html
