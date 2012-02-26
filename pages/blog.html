@@ -1,10 +1,10 @@
 <div class="post"> <h5> FEB 25 2012 </h5>
 	<p>
-		Looks like i've wasted another day playing with myself and the internet.  But I really am taken by how easy it is to create interactive simulations via html and javascript (and a few javascript libraries).  I guess it's fun from a pure technological perspective, but what I am really interested in the prospect of being able to share ideas (say scientific models) in more compelling, transparent, and distributed ways.  What if every model you ever saw treated in a paper was readily available online, not just in the form of source code that you may or may be able to run, but complete and live.  
+		Looks like i've wasted another day playing with myself and the internet.  But I really am taken by how easy it is to create interactive simulations via html and javascript (and a few javascript libraries).  I guess it's fun from a pure technological perspective, but what I'm really interested in the prospects for communicating ideas (say scientific models) in more compelling, transparent, and distributed ways.  What if every model you ever saw treated in a paper was readily available online, not just in the form of source code that you may or may be able to run, but complete and live.  
 	</p>
 	
 	<p>
-		I threw this little guy together a year or two ago when I was learning a little prototyping language called <a href="http://processing.org">processing</a>.  Today I stumbled upon <a href="http://processingjs.org">processing.js</a>, a javascript library that translates the raw processing code directly into usable javascript, and .  It's not clear to me that it doesn't make more sense to just write javascript.  But it's certainly easier to drop the processing code directly onto the page, and in the spirit of experimentation.
+		I threw this little guy together a year or two ago when I was learning this open source prototyping language called <a href="http://processing.org">processing</a>. (And here's the processing <a href="processing/circles.pde">source code</a>.) Today I stumbled upon <a href="http://processingjs.org">processing.js</a>, a javascript library that converts the processing source code directly into javascript.  It's not clear to me that it doesn't make more sense to just write javascript.  But it's certainly easier to drop the processing code directly onto the page.
 	</p>
 	
 	<div class="media">
@@ -14,7 +14,7 @@
 				var p = Processing.loadSketchFromSources(canvas, [source]);
 				$('#loader').append(canvas);
 		</script>
-		<canvas id ="circles" width="600px" height="300px" tabindex="0" style="image-rendering: optimizequality !important; ">
+		<canvas id ="circles" width="690px" height="300px" tabindex="0" style="image-rendering: optimizequality !important; ">
 				This text is displayed if your browser does not support HTML5 Canvas.
 		</canvas>
 	</div>

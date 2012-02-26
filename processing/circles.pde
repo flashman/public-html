@@ -1,5 +1,5 @@
 int dr = 10;
-int mx = 600;
+int mx = 690;
 int my= 300;
 int i = 0;
 void setup()
@@ -20,6 +20,8 @@ void draw()
 void cc(int x, int y){
   int z = (int) random(2,15);
   while(z>0){
+  	stroke(0);
+  	fill(255 - 15*z, 50+205*(mouseX/mx), 50+205*(1-mouseY/my));
     ellipse(x, y, dr*z, dr*z);
     z--;
   };
