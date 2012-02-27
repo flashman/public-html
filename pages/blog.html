@@ -5,7 +5,12 @@
 	<div class="media">
 		<img class="tex" src="http://s0.wp.com/latex.php?latex=\int_{-\infty}^\infty{e}^{-x^2/2}dx=\sqrt{2\pi}&bg=ffffff&fg=000000&s=1">
 	</div>
-		
+	<br>
+	<p>
+		This is not bad, but a little clumsy since every equation needs to be wrapped in an image tag and styled etc.  It's probably easy enough to write a little javascript function to automate the tag generation, but I won't worry about that now.  Another option that I came across comes from the javascript project <a href="http://www.mathjax.org">mathjax</a>.  It appears to parse and render TeX written directly into the body text.  It effectively handles inline math: \( -\nabla p + \eta \nabla^2 \mathbf{v} = 0 \), as well math set for the equation environment:  
+		$$\int_{-\infty}^\infty{e}^{-x^2/2}dx=\sqrt{2\pi}.$$
+		Conveniently, it also offers an interface for the reader to pull the TeX back out.  Seems like mathjax way to go.		
+	</p>
 </div>
 
 <div class="post"> <h5> FEB 25 2012 </h5>
