@@ -1,22 +1,36 @@
+<div class="post"> <h5> MARCH 4 2012 </h5>
+	<p>
+		Ok.  After spending way to much time on some stupid ass bug,  I finished coding up a first version of the spatially extended Rock Paper Scissors population model (with random mutation and asynchronous update).  Need to do all the work I wasn't doing, so I will save the details for later.  But it's worth noting up front that the entire simulation runs in javascript via the processing.js library that I mentioned a few days ago.  Its a bit hard on the javascript engine (I recommend running in it Chrome or Safari), but considering that it performs on the order of 600,000 iterations per second, it works better than expected.  Given that the processing development environment provides for simple generation of java applets, it might be better to embed it directly(?).  You can find the source code <a href="https://github.com/flashman/rock-paper-scissor">here</a>.
+		<br>
+		<br>
+		Update:  After playing around with the javascript version of the simulation, I find it sluggish.  Just check out the code on github.
+	</p>
+	
+	<div class="media">
+		<img src="assets/rock_paper_scissors.png" onclick="$('#body').load( 'pages/rps.html');"></img>
+	</div>
+</div>
+
 <div class="post"> <h5> FEB 26 2012 </h5>
 	<p>
-		This is more of a note to self than anything, but I've been hung up on how best to include mathematics in html.  There's mathml, but as far as I can tell that kindof sucks.  Or maybe it is better to just stick with pdfs?   I was just looking at Joan Baez's <a href="http://johncarlosbaez.wordpress.com/"> blog </a> and noticed what appears to proper typset mathematics.  Looking closer, it seems that someone is offering up a basic TeX typesetting server for inline math.  At this point it's not clear to me whether this is a wordpress feature or the product of someone else's ingenuity.  Either way, its pretty slick.  Feed math to http://s0.wp.com/latex.php? and it spits back a TeXed image. For example, I can generate crap like this:
+		This is more of a note to self than anything, but I've been hung up on how best to include mathematics in html.  There's mathml, but as far as I can tell that kindof sucks.  Or maybe it is better to just stick with pdfs?   I was just looking at Joan Baez's <a href="http://johncarlosbaez.wordpress.com/"> blog </a> and noticed what appears to proper typset mathematics.  Looking closer, it looks like wordpress offers a basic TeX typesetting server.  I assume it's intended for actually users of wordpress.  But no reason not to take advantage of a good thing.  Feed math to http://s0.wp.com/latex.php? and it spits back a TeXed image. For example, I can generate crap like this:
 	</p>
 	<div class="media">
 		<img class="tex" src="http://s0.wp.com/latex.php?latex=\int_{-\infty}^\infty{e}^{-x^2/2}dx=\sqrt{2\pi}&bg=ffffff&fg=000000&s=1">
 	</div>
 	<br>
+	
 	<script type="text/javascript"> MathJax.Hub.Queue(["Typeset",MathJax.Hub]); </script>
 	<p>
-		This is not bad, but a little clumsy since every equation needs to be wrapped in an image tag and styled etc.  It's probably easy enough to write a little javascript function to automate the tag generation, but I won't worry about that now.  Another option that I came across comes from the javascript project <a href="http://www.mathjax.org">mathjax</a>.  It appears to parse and render TeX written directly into the body text.  It effectively handles inline math: \( -\nabla p + \eta \nabla^2 \mathbf{v} = 0 \), as well math set for the equation environment:  
+		This is not bad, but clumsy since every equation needs to be wrapped in an image tag and styled etc.  It's easy enough to write a little javascript function to automate the tag generation, but I won't worry about that now.  Another much better option comes from the javascript project <a href="http://www.mathjax.org">mathjax</a>.  The library actually parses and renders TeX directly in the body text.  It effectively handles inline math: \( -\nabla p + \eta \nabla^2 \mathbf{v} = 0 \), as well math set for the equation environment:  
 		$$\int_{-\infty}^\infty{e}^{-x^2/2}dx=\sqrt{2\pi}.$$
-		Conveniently, it also offers an interface for the reader to pull the TeX back out.  Seems like mathjax way to go.		
+		Conveniently, it also offers an interface for the reader to pull the TeX back out.  Seems like mathjax is the way to go.		
 	</p>
 </div>
 
 <div class="post"> <h5> FEB 25 2012 </h5>
 	<p>
-		Looks like i've wasted another day playing with myself and the internet.  But I really am taken by how easy it is to create interactive simulations via html and javascript (and a few javascript libraries).  I guess it's fun from a pure technological perspective, but what I'm really interested in the prospects for communicating ideas (say scientific models) in more compelling, transparent, and distributed ways.  What if every model you ever saw treated in a paper was readily available online, not just in the form of source code that you may or may be able to run, but complete and live.  
+		Looks like i've wasted another day playing with the internet.  But I really am taken by how easy it is to create interactive simulations via html and javascript (and a few javascript libraries).  I guess it's nice that all the pieces of technology are learning to play together, but what I'm really taken by is the prospects for communicating ideas (say scientific models) in more compelling, transparent, and distributed ways.  What if every model you ever saw treated in a paper was readily available online, not just in the form of source code that you may or may be able to run, but complete and live.  (For that matter, why doesn't arxiv host supplemental material like source code...and for that matter why doesn't arxiv serve as a code hub, like github, for scientific simulations.)   
 	</p>
 	
 	<p>
@@ -38,7 +52,7 @@
 
 <div class="post"> <h5> FEB 17 2012 </h5>
 	<p> 
-		I recently started playing music with people from the program.  (To be fair, they play guitar, mandelin, piano, sing, and I play on boxes like a hobo; keeping it trashy...always trashy).    We've mostly kept it playful and light, jumping between covers and mashups, such as the rugrats theme meets "Float On".  In the last week or two we also happened on some decent original grooves.  M. claims not to be so comfortable on the mandelin as to keep up with our free flow and style, so she took to reading (on a whim) from Cosmos. As you know, Carl Sagen fills a very special hole in my hart; I often look to him when I feel most dejected. And when you listen to his words and his passion, you can help but think, what a nut.  Hopefully we'll get some decent recordings of this stuff at some point.  But until then, here's some stuff of a similar theme that I worked on a few years back.  An excerpt from Glo Opera 2010,  mixed by some friends back in Portland, with vocals by yours truly.  
+		I recently started playing music with people from the program.  (To be fair, they play guitar, mandelin, piano, sing, and I play on boxes like a hobo; keeping it trashy...always trashy).    We've mostly kept it playful and light, jumping between covers and mashups, such as the rugrats theme meets "Float On".  In the last week or two we also happened on some decent original grooves.  M. claims not to be so comfortable on the mandelin as to keep up with our free flow and style, so she took to reading (on a whim) from Cosmos. As you know, Carl Sagen fills a very special hole in my hart; I often look to him when I feel most dejected. And when you listen to his words and his passion, you can't help but think: what a nut.  Hopefully we'll get some decent recordings of this stuff at some point.  But until then, here's some stuff of a similar theme that I worked on a few years back.  An excerpt from Glo Opera 2010,  mixed by some friends back in Portland, with vocals by yours truly.  
 	</p>
 	<div class="media">	
 		<audio controls="controls">

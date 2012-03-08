@@ -17,7 +17,7 @@ a:hover {background-color:black; color: white;}
 div,img { margin: 0}
 .page_width { width:691px; }
 
-#header {  height: 272px; background: url(../assets/dessert_c4.jpg); position:relative }
+#header {  height: 272px; background: url(../assets/dessert_bike.jpg) scroll 0 -65px; position:relative }
 #header #under-header {height:127px; padding-top: 145px; background: white; opacity: 0.4;
 	position:absolute; bottom: 0px; z-index: 1; }
 #header #header-container { text-align: right;  position:absolute; 
