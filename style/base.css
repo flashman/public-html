@@ -23,7 +23,7 @@ div,img { margin: 0}
 #header #header-container { text-align: right;  position:absolute; 
 	bottom: 0px; z-index: 2; display:inline-block; width:inherit; color: #949494; }
 #header .header-text { text-align: right; vertical-align:top;}
-#header #name {  line-height:42px; height: 43px; letter-spacing: 15px }
+#header #name {  line-height:42px; height: 43px; letter-spacing: 14px }
 #header #email {  line-height:18px; height: 21px;  padding-right: 17px}
 #header #space { height:10px;  background: white; margin-top:65px}
 #header #nav-bar { height: 53px;}
