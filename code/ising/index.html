@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<title>2D Ising Model</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="2D Ising Model">
+<meta name="description" content="">
+<link type="text/css" rel="stylesheet" href="../../style/base.css" />
+<link type="text/css" rel="stylesheet" href="ising.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/alea.js"></script>
+<script type="text/javascript" src="ising.js"></script>
+</head>
+<body>
+	<div id="body" class="">
+		<div align="center">
+			<h1> ISING MODEL </h1>
+			<br>
+			<h3 id"top"><span id="display" title="Click to change BETA"> BETA=0</span>
+				<span id="input" style="display:none">BETA=<input type="val" style="width:20pt" /></span>
+				<span id="mag" title="Click to start sampling--stops after 100 samples"> &lt;|m|&gt;= <span id="magval">?</span></span>
+			</h3>
+			<canvas id="canvas">
+				This text is displayed if your browser does not support HTML5 Canvas.
+			</canvas>
+			<br>
+			<h3 > 
+				<span  id="start" >START </span>
+				<span  id="stop" >STOP </span>
+				<span id="reset">RESET</span>
+			</h3> 
+
+		</div>		
+		<p>Note: Simulation seems to run best, and by best I mean very good, on Safari with openGL enabled (under the "Develop" tab).  I'm a bit surprised that it doesn't run better on Chrome. 
+		</p>
+		<h3 id="tsTitle" style="display:none">|M| TIME SERIES:</h3>
+		<p id="timeseries"></p>
+
+		
+		
+	</div>
+</body>
+</html>
