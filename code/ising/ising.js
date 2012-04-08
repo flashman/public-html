@@ -6,18 +6,21 @@ $(document).ready( function(){
 	var random = new Alea(m.random());//a better random number generator
 
     
-    var NX = 100, NY = 100, SD= 5;
+    //model variables
+	var BETA = 0;
+	var THERMTIME= Infinity, TIME=0;  //measured in metropolis sweeps
+	var SAMPLE = false;
+	var NX = 100, NY = 100, SD= 5;
     var X= NX*SD, Y = NY*SD;
+    
+    //size canvas element
     canvas.setAttribute('width', ''+X);
     canvas.setAttribute('height', ''+Y);
     $("#body").width(X);
 	$("body").width(X);
 
-    
-	var BETA = 0;
-	var THERMTIME= Infinity, TIME=0;  //measured in metropolis sweeps
-	var SAMPLE = false;
 	
+	//initialize ising model
 	i = new ising();
 	
 	
@@ -57,10 +60,7 @@ $(document).ready( function(){
 	//Start sampling 
 	$('#mag').click(function() {
 		THERMTIME=TIME;
-	});
-	
-	
-
+	});	
 	
 	
 	//--------------------Ising Class--------------------//
@@ -166,7 +166,7 @@ $(document).ready( function(){
 			for(var i=THERMTIME; i<=TIME; i++ ) { sum += M[i]; }
 			avgmag= sum/(TIME-THERMTIME+1);
 			$('#magval').text(''+(avgmag).toFixed(6));
-		};
+		}
 
 		function printM(){
 			console.log("Magnetization Time Series:");
@@ -188,11 +188,11 @@ $(document).ready( function(){
 		//black for spin up (+1), white for spin down (-1)
         this.draw = function() {
 			if (this.s == 1 ){
-				ctx.fillStyle = "#FFFFFF"; 
+				ctx.fillStyle = "#000000"; 
 				ctx.fillRect(SD * this.j ,SD * this.i ,SD, SD);
 			}
 			else{
-				ctx.fillStyle = "#000000"; 
+				ctx.fillStyle = "#ffffff"; 
 				ctx.fillRect(SD * this.j ,SD * this.i ,SD, SD);
 			}
 
