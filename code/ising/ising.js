@@ -33,6 +33,7 @@ $(document).ready( function(){
 	$('#stop').click(function(){
 		console.log("STOP");
 		clearTimeout(t);
+		i.print();
 	})
 	
 	$('#reset').click(function(){
@@ -70,8 +71,9 @@ $(document).ready( function(){
 		reset();
 	    
 	    //--------Ising Interface----------//
-	    this.run = function(){ run(); };
-	    this.reset = function(){ reset(); };
+	    this.run = function(){ run(); }
+	    this.reset = function(){ reset(); }
+	    this.print = function(){ printM(); }
 		
 		//--------Ising Class functions--------//
 		function reset(){
@@ -86,7 +88,6 @@ $(document).ready( function(){
 					cells[i][j] = new Cell(i,j,s);
 					cells[i][j].draw();
 				}		
-			
 			}
 		}
 		
@@ -94,7 +95,6 @@ $(document).ready( function(){
         function run(){
         	sweep();
 			t = setTimeout(run,1);
-			if(TIME>THERMTIME+100){	clearTimeout(t); printM();};
         }
         
         //draw all cells
@@ -109,10 +109,10 @@ $(document).ready( function(){
 
 		//--------Ising Class Simulation Helpers------//
 		
-		//Perform a Metropolis Sweep at temperature BETA ( =>T )
+		//Perform a Metropolis Sweep at BETA = 1/k_B*TEMP
 		function sweep(){		
 
-			//randomly select cell elements NX^2 times
+			//randomly select cell elements NX*NY times
 			for(var k = 1; k<NX*NY; k++){
 				var i = m.floor(NY*random());
 				var j = m.floor(NX*random());
@@ -120,12 +120,10 @@ $(document).ready( function(){
 				//flip the state of the selected element if it decreases the hamiltonian
 				if (dH<=0){
 					cells[i][j].s = -cells[i][j].s;
-					//cells[i][j].draw();
 				}
 				else {
 					if (random() < m.exp(- BETA * dH)){
 						cells[i][j].s = -cells[i][j].s;
-						//cells[i][j].draw();
 					}
 				}
 			}
@@ -149,7 +147,7 @@ $(document).ready( function(){
 					+ cells[i][ (j+1) % NX].s );
 		}
 		
-		//sum over all spin states of current model configuration
+		//computation average magnetization over all spin states of current model configuration
 		function updateM(){
 			var mag = 0;
 			for(var i=0;i<NY;i++){
@@ -157,7 +155,7 @@ $(document).ready( function(){
 					mag = mag + cells[i][j].s;
 				}
 			}
-			M[TIME] = m.abs(mag)/(NX*NY);
+			M[TIME] = mag/(NX*NY);
 		}
 				
 		//estimate magnetization and update the display
@@ -165,14 +163,13 @@ $(document).ready( function(){
 			var sum=0;
 			for(var i=THERMTIME; i<=TIME; i++ ) { sum += M[i]; }
 			avgmag= sum/(TIME-THERMTIME+1);
-			$('#magval').text(''+(avgmag).toFixed(6));
+			$('#magval').text(''+(m.pow(avgmag,2)).toFixed(6));
 		}
 
 		function printM(){
 			console.log("Magnetization Time Series:");
-//			$("#tsTitle").show();
-//			$("#timeseries").text(M.join(", "));
-			console.log(M.join(", "));
+			M2 = $.map(M,function(el, i){ return m.pow(el,2)});
+			console.log(M2.join(", "));
 		}
 		
 	}
