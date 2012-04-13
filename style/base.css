@@ -38,5 +38,5 @@ div,img { margin: 0}
 #body audio {width: 425px; }
 
 #footer { height: 53px; background: url(../assets/trees.gif) scroll 0 53px;}
-#footer .copyright { float:right; position:relative; color: #a0a0a0; padding:19px 14px;}
+#footer .copyright { float:right; position:relative; color: #777777; padding:19px 14px;}
 

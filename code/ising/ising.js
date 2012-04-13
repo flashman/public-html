@@ -95,6 +95,7 @@ $(document).ready( function(){
         function run(){
         	sweep();
 			t = setTimeout(run,1);
+			if(TIME>THERMTIME+99){ clearTimeout(t); printM(); }
         }
         
         //draw all cells
@@ -163,15 +164,14 @@ $(document).ready( function(){
 			var sum=0;
 			for(var i=THERMTIME; i<=TIME; i++ ) { sum += M[i]; }
 			avgmag= sum/(TIME-THERMTIME+1);
-			$('#magval').text(''+(m.pow(avgmag,2)).toFixed(6));
+			$('#magval').text(''+(m.pow(avgmag,2)).toFixed(8));
 		}
 
 		function printM(){
-			console.log("Magnetization Time Series:");
-			M2 = $.map(M,function(el, i){ return m.pow(el,2)});
+			console.log("Magnetization^2 Time Series:");
+			M2 = $.map(M,function(el, i){ return (m.pow(el,2)).toFixed(8)});
 			console.log(M2.join(", "));
-		}
-		
+		}	
 	}
     
     //-----------------Cell Class--------------------//
