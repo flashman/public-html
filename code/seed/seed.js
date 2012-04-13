@@ -14,10 +14,13 @@ $(document).ready( function(){
 	//initialize seed
 	var l1 = 30;
 	var l2 = l1 * 1.3
-	var GENE = [[1,1],[l1,l1],[l1,l2],[l1,l2],[l1,l2],[l1,l2]]; 	
-	var GENEHISTORY = [GENE];
+	var MASSGENE = [1,1];
+	var POINTGENE = [l1,l1];
+	var SHAPEGENE1 = [l1,l2];
+	var INITGENE = [MASSGENE,POINTGENE,SHAPEGENE1,SHAPEGENE1,SHAPEGENE1,SHAPEGENE1]; 	
+	var GENEHISTORY = [INITGENE];
 	var GENERATION = 0;
-	var s = new SeedArray(GENE);
+	var s = new SeedArray(INITGENE);
 	
 	
 	//-------------USER INTERFACE-------------//
@@ -38,7 +41,7 @@ $(document).ready( function(){
 
 	$("#reset").click(function(){
 		console.log(GENE);
-		s.parentGene = GENE;
+		s.parentGene = INITGENE;
 		s.reset();
 		GENERATION = 0;
 		$("#genval").text(GENERATION);
@@ -60,14 +63,7 @@ $(document).ready( function(){
 			var j = Math.floor(y/BINSIZE);
 			mutate(i,j);
 		}
-		
-		this.mutate2 = function(x,y){
-			var i = Math.floor(x/BINSIZE);
-			var j = Math.floor(y/BINSIZE);
-			seeds[i][j].mutate(40);
-			seeds[i][j].draw();
-		}
-		
+				
 		//---------INTERNAL METHODS-------//
 		function reset(){
 			for(var i=0; i<NX; i++){
@@ -75,7 +71,7 @@ $(document).ready( function(){
 				for(var j=0; j<NY; j++){
 					seeds[i][j] = new Seed(i,j,parentGene);
 					if(i != (NX-1)/2 || j != (NY-1)/2){
-						seeds[i][j].mutate(60);
+						seeds[i][j].mutate(1);
 					}
 					seeds[i][j].draw();
 				}
@@ -130,16 +126,25 @@ $(document).ready( function(){
 			context.arc(this.x, this.y, this.g[0][0], 0, 2*Math.PI,true);
 			context.stroke();
 			context.fill();
+			
+			function drawCurve(g){
+			
+			}
 		}
 		
+		//mutate seed genes randomly via a random walk  
 		this.mutate = function(step){
 			for(var i=0; i< step; i++){
 				var p1 = Math.floor(this.g.length * random());
 				var p2 = Math.round(random());
-				var s = (p1>0 ? 5 : 2);
+				var s = (p1>0 ? 20 : 1);
 				var delta = s*(random()-1/2);
 				this.g[p1][p2] = Math.abs(this.g[p1][p2] + delta);   
 			}
 		}	
 	}
 });
+
+//Object.prototype.clone = function(){
+	//jQuery.extend(true, {}, oldObject);
+//}
