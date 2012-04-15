@@ -1,150 +1,72 @@
 $(document).ready( function(){
     var m = Math;
-    var canvas = document.getElementById('canvas');
-    var context = canvas.getContext('2d');
-	var random = new Alea(Math.random());//a better random number generator
-
-    //setup canvas and bin size
-    var NX = 3, NY = 3; //odd to keep the parent centered
-    var BINSIZE = 200;
-    canvas.setAttribute('width', ''+NX*BINSIZE);
-    canvas.setAttribute('height', ''+NY*BINSIZE);
-
 	
 	//initialize seed
-	var l1 = 30;
+	var l1 = 10;
 	var l2 = l1 * 1.3
-	var MASSGENE = [1,1];
-	var POINTGENE = [l1,l1];
-	var SHAPEGENE1 = [l1,l2];
-	var INITGENE = [MASSGENE,POINTGENE,SHAPEGENE1,SHAPEGENE1,SHAPEGENE1,SHAPEGENE1]; 	
+	var MASSGENE = 1; // mass
+	var POINTGENE = [[l1,0], [-l1,0]]; // start point, end point 
+	// control points for tob lobe, control points for bottom lob
+	var SHAPEGENE = [[l1,l2], [-l1,l2], [l1,-l2], [-l1,-l2] ]; 
+	var INITGENE = [MASSGENE,POINTGENE,SHAPEGENE ]; 	
 	var GENEHISTORY = [INITGENE];
-	var GENERATION = 0;
-	var s = new SeedArray(INITGENE);
+	var s = new SeedArray(INITGENE,'canvas',3,3,300,1,true,true);
+	var ss = new SeedArray(INITGENE,'canvas-single-seed',1,1,300,0.01,false,false);
 	
+	$("#canvas-single-seed").click(function(){
+		ss = new SeedArray(INITGENE,'canvas-single-seed',1,1,300,0.01,false,false);
+		for(var n=0; n<100; n++){
+			ss.mutate(0,0);
+		}
+	})
 	
+
 	//-------------USER INTERFACE-------------//
 	$("#canvas").click(function(){
 		coords = canvas.relMouseCoords(event);
 		canvasX = coords.x;
 		canvasY = coords.y;
-		s.mutate(canvasX, canvasY)
-		GENERATION += 1;
-		$("#genval").text(GENERATION);
-	})
+		GENEHISTORY.push(s.getParentGene());
+		s.mutate(canvasX, canvasY);
+		$("#genval").text(s.getGeneration());
+	});
 	
 	$("#save").click(function(){
+		console.log(GENEHISTORY.printf());
 		// save canvas image as data url (png format by default)
 		var dataURL = canvas.toDataURL();
 		window.open(dataURL);
-	})
+	});
 
 	$("#reset").click(function(){
-		console.log(GENE);
-		s.parentGene = INITGENE;
-		s.reset();
-		GENERATION = 0;
-		$("#genval").text(GENERATION);
-	})
+		console.log(GENEHISTORY.printf());
+		var s = new SeedArray(INITGENE,'canvas',3,3,300,1,true,true);
+		$("#genval").text(s.getGeneration());
+	});
 	
-	//------------SEED ARRAY CLASS------//
-	function SeedArray(gene){
-		var parentGene = gene;
-		var seeds = [];
-		
-		reset();
-		
-		//---------EXTERNAL METHODS-------//
-		
-		this.reset = function(){ reset() };
-		this.draw = function(){ draw() };
-		this.mutate = function(x,y){ 
-			var i = Math.floor(x/BINSIZE);
-			var j = Math.floor(y/BINSIZE);
-			mutate(i,j);
-		}
-				
-		//---------INTERNAL METHODS-------//
-		function reset(){
-			for(var i=0; i<NX; i++){
-				seeds[i]=[];
-				for(var j=0; j<NY; j++){
-					seeds[i][j] = new Seed(i,j,parentGene);
-					if(i != (NX-1)/2 || j != (NY-1)/2){
-						seeds[i][j].mutate(1);
-					}
-					seeds[i][j].draw();
-				}
-			}
-		}
-
-		function mutate(i,j){
-			parentGene = seeds[i][j].g;
-			reset();
-		}
-	}
-	
-	//------------SEED ClASS------------//	
-	function Seed(i,j,gene){
-		this.i = i;
-		this.j = j;
-		this.x = BINSIZE*(i+1/2); //center
-		this.y = BINSIZE*(j+1/2); //center
-		this.g = [];
-		
-		//create local copy of gene
-		for(var m in gene){
-			this.g[m]=[]
-			for(var n in gene[m]){
-				this.g[m][n]=gene[m][n];
-			}
-		}
-		
-		//------------SEED MEHTHODS------------//
-		this.draw = function(){
-			context.clearRect(BINSIZE* this.i, BINSIZE* this.j,BINSIZE,BINSIZE);
-			
-			//Draw seed wing using the parameters stored in gene 
-			context.beginPath();
-			context.moveTo(this.x-this.g[1][0],this.y);
-			context.lineTo(this.x+this.g[1][1],this.y);
-			context.bezierCurveTo(
-				this.x+this.g[1][1], this.y+this.g[2][1], 				this.x-this.g[3][0],this.y+this.g[3][1], 
-				this.x-this.g[1][0], this.y);
-			context.lineTo(this.x,this.y);
-			context.lineTo(this.x+this.g[1][1],this.y)
-			context.bezierCurveTo(
-				this.x+this.g[1][1], this.y-this.g[4][1], 				this.x-this.g[5][0],this.y-this.g[5][1], 
-				this.x-this.g[1][0], this.y);
-			context.lineTo(this.x,this.y);
-			context.lineWidth = 3;
-			context.strokeStyle = "black"; // line color
-			context.stroke();
-			
-			//draw seed 
-			context.beginPath();
-			context.arc(this.x, this.y, this.g[0][0], 0, 2*Math.PI,true);
-			context.stroke();
-			context.fill();
-			
-			function drawCurve(g){
-			
-			}
-		}
-		
-		//mutate seed genes randomly via a random walk  
-		this.mutate = function(step){
-			for(var i=0; i< step; i++){
-				var p1 = Math.floor(this.g.length * random());
-				var p2 = Math.round(random());
-				var s = (p1>0 ? 20 : 1);
-				var delta = s*(random()-1/2);
-				this.g[p1][p2] = Math.abs(this.g[p1][p2] + delta);   
-			}
-		}	
-	}
 });
 
-//Object.prototype.clone = function(){
-	//jQuery.extend(true, {}, oldObject);
-//}
+Object.prototype.clone = function() {
+  var newObj = (this instanceof Array) ? [] : {};
+  for (i in this) {
+    if (i == 'clone') continue;
+    if (this[i] && typeof this[i] == "object") {
+      newObj[i] = this[i].clone();
+    } 
+    else newObj[i] = this[i]
+  } 
+  return newObj;
+}
+
+Array.prototype.printf = function() {
+	var newString = '[';
+	for (var i=0; i< this.length; i++){
+		if(this[i] && typeof this[i] == "object"){
+			newString += this[i].printf();	
+		}
+		else { newString +=  (this[i]).toFixed(0) ; }
+		if(i+1 < this.length){newString+= ','; }
+	}
+	newString +=']';
+	return newString;
+}

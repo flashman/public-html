@@ -1,47 +1,46 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-<title>RANDOM SEEDS</title>
+<title>RANDOM SEED STATISTICS</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="keywords" content="2D Ising Model">
+<meta name="keywords" content="Random Seed Shapes">
 <meta name="description" content="">
 <link type="text/css" rel="stylesheet" href="../../style/base.css" />
 <link type="text/css" rel="stylesheet" href="seed.css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script type="text/javascript" src="../../js/alea.js"></script>
 <script type="text/javascript" src="../../js/canvasMouseCoords.js"></script>
-<script type="text/javascript" src="seed-array.js"></script>
 <script type="text/javascript" src="seed.js"></script>
 </head>
 <body>
 	<div id="body" class="">
-		<h1> RANDOM SEEDS </h1>
-		<br><br>
-		<hr>
-		<br><br>
-		<div id="evolve">
-			<h3> EVOLVE SEED SHAPES ACCORDING TO "FITNESS" </h3>
+		<div align="left">
+			<h1> RANDOM SEED DISTRIBUTION: </h1>
+			<br>
 			<h3 id="top">
 				<span id="gen"> GENERATION = 
 					<span id="genval">0</span> 
-				</span> 
+				</span>
 			</h3>
-			<canvas id="canvas" title="Click on the seed you like most.  A new generation of seed will appear based on the that seeds 'gene'.">
+			<canvas id="canvas1">
 				This text is displayed if your browser does not support HTML5 Canvas.
 			</canvas>
-			<br>
 			<h3> <span id="reset">RESET</span>    <span id="save">SAVE</span>  </h3>
 		</div>
-		<br><br>
-		<hr>
-		<br><br>
-		<div id="single-seed">
-			<h3 id="top"><span id="gen"> RANDOM WALK IN SEED SPACE </span> 
+		
+		<div align="right">
+			<h1> SINGLE SEED: </h1>
+			<br>
+			<h3 id"top"><span id="gen"> GENERATION = 
+				<span id="genval">0</span> 
 			</span> </h3>
-			<canvas id="canvas-single-seed" title="Perform a random walk (100 steps) through seed space.  Click to reset.">
+			<canvas id="canvas2">
 				This text is displayed if your browser does not support HTML5 Canvas.
 			</canvas>
-		</div>
+			<h3> <span id="reset">RESET</span>    <span id="save">SAVE</span>  </h3>
+
+		</div
+
 	</div>
 </body>
 </html>
