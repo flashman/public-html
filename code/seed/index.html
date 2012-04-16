@@ -8,6 +8,7 @@
 <link type="text/css" rel="stylesheet" href="../../style/base.css" />
 <link type="text/css" rel="stylesheet" href="seed.css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/extensions.js"></script>
 <script type="text/javascript" src="../../js/alea.js"></script>
 <script type="text/javascript" src="../../js/canvasMouseCoords.js"></script>
 <script type="text/javascript" src="seed-array.js"></script>
@@ -20,12 +21,19 @@
 		<hr>
 		<br><br>
 		<div id="evolve">
-			<h3> EVOLVE SEED SHAPES ACCORDING TO "FITNESS" </h3>
+			<h2> EVOLVE SEED SHAPES ACCORDING TO "FITNESS" </h2>
+			<br>
 			<h3 id="top">
 				<span id="gen"> GENERATION = 
 					<span id="genval">0</span> 
-				</span> 
+				</span>
+				<span style="padding: 0 50px"></span>
+				<span id="display" title="Click to change mutations per generation"> #MUTATIONS/GENERATION=<span id="disp-val"> </span></span>
+					<span id="input" style="display:none">#MUTATIONS/GENERATION=<input type="val" style="width:20pt" /></span>
+				</span>
 			</h3>
+
+			
 			<canvas id="canvas" title="Click on the seed you like most.  A new generation of seed will appear based on the that seeds 'gene'.">
 				This text is displayed if your browser does not support HTML5 Canvas.
 			</canvas>
@@ -38,7 +46,7 @@
 		<div id="single-seed">
 			<h3 id="top"><span id="gen"> RANDOM WALK IN SEED SPACE </span> 
 			</span> </h3>
-			<canvas id="canvas-single-seed" title="Perform a random walk (100 steps) through seed space.  Click to reset.">
+			<canvas id="canvas-single-seed" title="Perform a random walk (100 generations at current number of mutations per generation) through seed space.  Click to reset.">
 				This text is displayed if your browser does not support HTML5 Canvas.
 			</canvas>
 		</div>
