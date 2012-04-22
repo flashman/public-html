@@ -20,7 +20,7 @@ $(document).ready( function(){
 */
 
 	var INITGENE = [MASSGENE,POINTGENE,SHAPEGENE ]; 
-	var s = new SeedArray(INITGENE,'canvas',3,3,300,MUTSPERGEN, true);
+	var s = new SeedArray(INITGENE,'canvas',3,3,250,MUTSPERGEN, true);
 	var ss = new SeedArray(INITGENE,'canvas-single-seed',1,1,500,MUTSPERGEN,false);
 	$('#display #disp-val').text( MUTSPERGEN );	
 
