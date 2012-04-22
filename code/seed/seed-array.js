@@ -32,7 +32,7 @@ function SeedArray(gene,canvasID,nx,ny,binsize,nsteps, stats){
 	this.reset = function(newGene){
 		parentGene = newGene;
 		history = [parentGene];
-		generation = 0;
+		generation ++;
 		draw();
 	}
 	this.draw = function(){ draw() };
@@ -42,6 +42,8 @@ function SeedArray(gene,canvasID,nx,ny,binsize,nsteps, stats){
 		mutate(i,j);
 	}
 	this.clear = function(){ clear() };
+	this.log = function(){ log() };
+	this.alert = function() { alertLog() };
 	this.getParentGene = function(){ return parentGene; }
 	this.getGeneration = function(){ return generation; }
 	this.getHistory = function(){ return history; }
@@ -82,6 +84,24 @@ function SeedArray(gene,canvasID,nx,ny,binsize,nsteps, stats){
 		draw();
 	}
 	
+	function log(){
+		for(var i=0; i<NX; i++){
+			for(var j=0; j<NY; j++){
+				console.log( generation + ',' + (seeds[i][j].g.flatten()).toString() + ',' + seeds[i][j].area);
+			}
+		}
+	}
+	
+	function alertLog(){
+		s = '';
+		for(var i=0; i<NX; i++){
+			for(var j=0; j<NY; j++){
+				s += generation + ',' + seeds[i][j].g.flatten().toString() + ',' + seeds[i][j].area + '\n';
+			}
+		}
+		alert(s);
+	}
+	
 	
 	//------------SEED ClASS------------//	
 	function Seed(i,j,gene){
@@ -92,7 +112,7 @@ function SeedArray(gene,canvasID,nx,ny,binsize,nsteps, stats){
 
 		var x = BINSIZE*(i+1/2); //center
 		var y = BINSIZE*(j+1/2); //center
-		
+		var hue = ( 200*random()+ 200*( ( i+1 + j*NX)/(NX * NY)) ) % 255  ;
 		
 		//------------SEED MEHTHODS------------//
 		this.clear = function(){clear(); }
@@ -129,8 +149,8 @@ function SeedArray(gene,canvasID,nx,ny,binsize,nsteps, stats){
     			context.fillText('GEN: ' + generation, x-BINSIZE/2, y+BINSIZE/2 - 40);
 				context.fillText('MASS: ' + this.g[0], x-BINSIZE/2, y+BINSIZE/2 - 30);
 				context.fillText('AREA: ' + this.area, x-BINSIZE/2, y+BINSIZE/2 - 20);
-				context.fillText('ANCHORS: ' + this.g[1].printf(), x-BINSIZE/2, y+BINSIZE/2 - 10);
-				context.fillText('CONTROLS: ' + this.g[2].printf(), x-BINSIZE/2, y+BINSIZE/2 - 0);
+				context.fillText('P1,P2: ' + this.g[1].flatten().printf(), x-BINSIZE/2, y+BINSIZE/2 - 10);
+				context.fillText('Q1,Q2,Q3,Q4: ' + this.g[2].flatten().printf(), x-BINSIZE/2, y+BINSIZE/2 - 0);
 			}			
 		}
 		
@@ -141,28 +161,29 @@ function SeedArray(gene,canvasID,nx,ny,binsize,nsteps, stats){
 				//mutate mass
 				this.g[0] = random()<0.05 ? Math.max( this.g[0] + Math.round(2*(random() - 0.5)), 1): this.g[0]   ;
 				
-				if(random()>1/2){
+				if(random()<1/5){
 					//mutate primary coordinates
 					var index = Math.floor( (this.g[1].length) * random());
 					if(index == 0){
-						this.g[1][index][0] = Math.max(this.g[1][index][0] + Math.round(10* (random() - 1/2)), 1);	
+						this.g[1][index][0] = Math.max(this.g[1][index][0] + Math.round(18* (random() - 1/2)), 1);	
 					}
 					else{
-						this.g[1][index][0] = Math.min(this.g[1][index][0] + Math.round(10* (random() - 1/2)),-1);	
+						this.g[1][index][0] = Math.min(this.g[1][index][0] + Math.round(18* (random() - 1/2)),-1);	
 					}
 				}
 				else{
 				// or mutate control parameters  
 				//Restrict each parameter to one sector 
 					var index = Math.floor( (this.g[2].length) * random()) ;
-					for(var j=0; j<2; j++){
+					//for(var j=0; j<2; j++){
+						var j = Math.floor(2*random());
 						if (this.g[2][index][j]>0){
 							this.g[2][index][j] = Math.max(this.g[2][index][j] + Math.round(25* (random() - 1/2)), 1);
 						}
 						else{
 							this.g[2][index][j] = Math.min(this.g[2][index][j] + Math.round(25* (random() - 1/2)), -1);
 						}
-					}
+					//}
 				}
 			}
 		}
@@ -181,7 +202,8 @@ function SeedArray(gene,canvasID,nx,ny,binsize,nsteps, stats){
 			else{
 				context.strokeStyle = "grey"; // line color
 				context.stroke();
-				context.fillStyle = "grey"; // fill color
+				context.fillStyle = 'hsl(' + hue + ', 50%, 50%)';
+				//context.fillStyle = "grey"; // fill color
 				context.fill();
 			}
 		}
