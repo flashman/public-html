@@ -1,3 +1,12 @@
+<div class="post"> <h5> MAY 14 2012 </h5>
+	<p> Following additional experiments with random shapes, similar to those described in the previous post, I obtained the following more complete (and somewhat less interesting) plot.  As before, the random autogyros are plotted in red.  In addition, rollers are plotted in green, undulators are plotted in blue, and gliders are plotted in yellow.   Trend lines for each of these aerodynamic groups (excepts for the gliders) are provided and colored accordingly.  To draw a more direct comparison with Auspurger's original study, her original trend lines (dashed) are also included.  With this larger data set, the curious autogyro trend line from before returns to a more plausible form.   
+	</p>
+	<div class="media">
+		<img src="assets/blog/wingloadVsVel.gif"></img>
+	</div>
+</div>
+
+
 <div class="post"> <h5> APRIL 30 2012 </h5>
 	<p> This is quick update on the seed project I described a month or two ago.  I previously described a general interest in trying to understand how a highly specialized object of nature, the maple seed, might have come to exist.  With that general interest in mind, I focused on the following (slightly) more focused question: How do the aerodynamics of random shapes compare to the aerodynamics of real seeds?
 	</p>
@@ -5,14 +14,14 @@
 	</p>
 	 
 	<div class="media">
-		<img src="assets/auspurger-windloadingVsVelocity.jpg"></img>
+		<img src="assets/blog/auspurger-windloadingVsVelocity.jpg"></img>
 	</div>
 	 
-	 <p> To address the question given above, I generated several dozen random shapes (generate your own random shapes <a href="code/seed/">here</a>), added some additional weight, and dropped them.  Simple enough.  For each of these random shapes I measured its mass, falling time, and classified its mode of flight.  Following the work of Auspurger, I then plotted wing-loading vs rate of decent for each of the random shapes.  This plot appears below.  Of particular interest are the class of auto-gyrating shapes, pictured in red.  The random shapes generally follow the trend of real seeds shown above: increased wing loading increases the rate of descent. But the class of autogyros stands out.  This class appears to demonstrate the opposite trend: increased wing loading decreases the descent velocity.                	`      
+	 <p> To address the question given above, I generated several dozen random shapes (generate your own random shapes <a href="code/seed/">here</a>), added some additional weight, and dropped them.  Simple enough.  For each of these random shapes I measured its mass, falling time, and classified its mode of flight.  Following the work of Auspurger, I then plotted wing-loading vs rate of decent for each of the random shapes.  This plot appears below.  Of particular interest are the class of auto-gyrating shapes, plotted in red.  The random shapes generally follow the trend of real seeds shown above: increased wing loading increases the rate of descent. But the class of autogyros stands out.  This class appears to demonstrate the opposite trend: increased wing loading decreases the descent velocity.                	`      
 	</p>
 	
 	<div class="media">
-		<img src="assets/loadVsVelGy.jpg"></img>
+		<img src="assets/blog/loadVsVelGy.jpg"></img>
 	</div>
 
 </div>
@@ -22,7 +31,7 @@
 	</p>
 	
 	<div class="media">
-		<img src="assets/ising.gif" onClick="window.location ='code/ising';"></img>
+		<img src="assets/blog/ising.gif" onClick="window.location ='code/ising';"></img>
 	</div>
 
 </div>
@@ -47,24 +56,15 @@
 	</p>
 	
 	<div class="media">
-		<img src="assets/rock_paper_scissors.gif" onClick="window.location ='processing/rps';"></img>
+		<img src="assets/blog/rock_paper_scissors.gif" onClick="window.location ='processing/rps';"></img>
 	</div>
 </div>
 
 <div class="post"> <h5> FEB 26 2012 </h5>
 	<p>
-		This is more of a note to self than anything, but I've been hung up on how best to include mathematics in html.  There's mathml, but as far as I can tell that kindof sucks.  Or maybe it is better to just stick with pdfs?   I was just looking at Joan Baez's <a href="http://johncarlosbaez.wordpress.com/"> blog </a> and noticed what appears to proper typset mathematics.  Looking closer, it looks like wordpress offers a basic TeX typesetting server.  I assume it's intended for actually users of wordpress.  But no reason not to take advantage of a good thing.  Feed math to http://s0.wp.com/latex.php? and it spits back a TeXed image. For example, I can generate crap like this:
-	</p>
-	<div class="media">
-		<img class="tex" src="http://s0.wp.com/latex.php?latex=\int_{-\infty}^\infty{e}^{-x^2/2}dx=\sqrt{2\pi}&bg=ffffff&fg=000000&s=1">
-	</div>
-	<br>
-	
-	<script type="text/javascript"> MathJax.Hub.Queue(["Typeset",MathJax.Hub]); </script>
-	<p>
-		This is not bad, but clumsy since every equation needs to be wrapped in an image tag and styled etc.  It's easy enough to write a little javascript function to automate the tag generation, but I won't worry about that now.  Another much better option comes from the javascript project <a href="http://www.mathjax.org">mathjax</a>.  The library actually parses and renders TeX directly in the body text.  It effectively handles inline math: \( -\nabla p + \eta \nabla^2 \mathbf{v} = 0 \), as well math set for the equation environment:  
+		I've been wondering how best to include mathematics on the web.  There's mathml, but as far as I can tell that sucks.  Maybe it's better to stick with pdfs?   I recently came across the javascript project <a href="http://www.mathjax.org">mathjax</a>.  The library actually parses and renders TeX directly in the body text.  It handles inline math: \( -\nabla p + \eta \nabla^2 \mathbf{v} = 0 \), as well as the equation environment:  
 		$$\int_{-\infty}^\infty{e}^{-x^2/2}dx=\sqrt{2\pi}.$$
-		Conveniently, it also offers an interface for the reader to pull the TeX back out.  Seems like mathjax is the way to go.		
+It also offers a nice interface for the reader to export equations and see the original TeX (just right click).
 	</p>
 </div>
 
@@ -96,7 +96,7 @@
 	</p>
 	<div class="media">	
 		<audio controls="controls">
-			<source src="assets/boko.wav" type="audio/wav" />
+			<source src="assets/blog/boko.wav" type="audio/wav" />
 =			Your browser does not support the audio element.
 		</audio>
 	</div>	
