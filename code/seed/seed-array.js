@@ -32,7 +32,8 @@ function SeedArray(gene,canvasID,nx,ny,binsize,nsteps, stats){
 	this.reset = function(newGene){
 		parentGene = newGene;
 		history = [parentGene];
-		generation ++;
+		//generation ++;
+		generation = 0;
 		draw();
 	}
 	this.draw = function(){ draw() };
@@ -161,29 +162,28 @@ function SeedArray(gene,canvasID,nx,ny,binsize,nsteps, stats){
 				//mutate mass
 				this.g[0] = random()<0.05 ? Math.max( this.g[0] + Math.round(2*(random() - 0.5)), 1): this.g[0]   ;
 				
-				if(random()<1/5){
+				if(random()>1/2){
 					//mutate primary coordinates
 					var index = Math.floor( (this.g[1].length) * random());
 					if(index == 0){
-						this.g[1][index][0] = Math.max(this.g[1][index][0] + Math.round(18* (random() - 1/2)), 1);	
+						this.g[1][index][0] = Math.max(this.g[1][index][0] + Math.round(10* (random() - 1/2)), 1);	
 					}
 					else{
-						this.g[1][index][0] = Math.min(this.g[1][index][0] + Math.round(18* (random() - 1/2)),-1);	
+						this.g[1][index][0] = Math.min(this.g[1][index][0] + Math.round(10* (random() - 1/2)),-1);	
 					}
 				}
 				else{
 				// or mutate control parameters  
 				//Restrict each parameter to one sector 
 					var index = Math.floor( (this.g[2].length) * random()) ;
-					//for(var j=0; j<2; j++){
-						var j = Math.floor(2*random());
+					for(var j=0; j<2; j++){
 						if (this.g[2][index][j]>0){
 							this.g[2][index][j] = Math.max(this.g[2][index][j] + Math.round(25* (random() - 1/2)), 1);
 						}
 						else{
 							this.g[2][index][j] = Math.min(this.g[2][index][j] + Math.round(25* (random() - 1/2)), -1);
 						}
-					//}
+					}
 				}
 			}
 		}

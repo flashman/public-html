@@ -2,7 +2,7 @@ $(document).ready( function(){
     var m = Math;
 	
 	//initialize seed params
-	var MUTSPERGEN = 250;
+	var MUTSPERGEN = 50;
 	var l1 = 45;
 	var l2 = l1 * 1.3
 	var GENESTRUCTURE = "gen, mass,p1x,p1y,p2x,p2y,q1x,q1y,q2x,q2y,q3x,q3y,q4x,q4y,area";
@@ -12,7 +12,6 @@ $(document).ready( function(){
 	var s = new SeedArray(INITGENE,'canvas',3,3,250,MUTSPERGEN, true);
 	console.log(GENESTRUCTURE);
 	s.log();
-	s.alert();
 
 	var ss = new SeedArray(INITGENE,'canvas-single-seed',1,1,500,MUTSPERGEN,false);
 	
@@ -28,7 +27,6 @@ $(document).ready( function(){
 		s.mutate(canvasX, canvasY);
 		$("#genval").text(s.getGeneration());
 		s.log();
-		//s.alert();
 	});
 	
 	$("#save").click(function(){		
