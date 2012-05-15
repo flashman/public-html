@@ -32,8 +32,8 @@ div,img { margin: 0}
 #header #nav-bar .tab:hover  { background-color:black; color: white; }
 #header #nav-bar .selected  { background-color:black; color: white; }
 
-#body{ min-height: 280px; padding: 20px 0px; }
-#body .post { padding-bottom: 25px; }
+#body{ min-height: 280px; padding-top: 20px }
+#body .post { padding-bottom: 10px; }
 #body .media {text-align: center; }
 #body audio {width: 425px; }
 
