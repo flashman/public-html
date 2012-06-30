@@ -23,6 +23,7 @@ $(document).ready( function(){
 			loc = data;
 			$('#city').text( (data.city).toUpperCase());
 			getTweetsByLocal(data.latitude, data.longitude, getSentiment);	
+			//getTweetsByLocal('40.77', '73.98', getSentiment);	    
 		}
 	});	
 
