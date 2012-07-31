@@ -11,9 +11,9 @@ h1,h2,h3,h4,h5,h6,dt{
 h1 { font-size: 40px; text-align: center}
 h2 { font-size: 28px; text-align: center}
 h3 { font-size: 24px; text-align: center}
-p { font-family: verdana; font-size: 14px; font-weight: normal; margin-top: 0px;}
+p,ol { font-family: verdana; font-size: 14px; font-weight: normal; margin-top: 0px;}
 a {text-decoration: none; color: #555555; }
-a:hover {background-color:black; color: white;}
+pre, a:hover {background-color:black; color: white;}
 div,img { margin: 0}
 .page_width { width:691px; }
 
