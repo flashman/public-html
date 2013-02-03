@@ -1,3 +1,101 @@
+<div class="post"> <h5>FEB 2 2012</h5>
+  <p>Welcome to 2013...I hear this year's going to be a good one. Anyway, for the last several months I have been working with Paul Ginsparg on some entropic methods for identifying &quote; interesting &quote; word usage in the <a href="http://arxiv.org/">arXiv</a>.  While the methods show some potential, there are still some problems and the project is stagnating.  It's hard for me to say for sure why this is the case.  I actually do find the questions very interesting in the abstract.  But in practice, the work has not maintained my interest as much as I would hope.  This is in part simply do to the hardwired positive and negative feedback mechanisms of research.   When things aren't going well, we struggle get frusterated board disinterested distracted discouraged.  Then the work deteriorates further and things only get worse.  It's a cycle i've been in for a while.  I'm still not sure how to get out of it.  I think it's the same kind of cycle that makes depression the sink hole that it is...<a href="http://tuvalu.santafe.edu/~moore/">Cris Moore</a> once told me that good research requres a certain mental disposition, one full of unreasonable optimism and deep self-loathing.  The first keeps you light on your toes and the second keeps you honest.</p>
+
+  <p>One of my longstanding frusterations with the research project has been the programming language itself.  I know this is a petty kind of thing, but not something to discount completely.   I guess python is the norm for scientific computing these days. Not really serious numerical computing, but the everyday high level programming language of choice.  Ok, sure there is matlab and mathematica and R and things like that, but you know what I mean.  Anyway, I really don't like python all that much, and the indentation just kills me---I want some freaking brackets or an end statment.  The problem is that I learned to program in ruby, and ruby is great.  I would ofcourse just use ruby for all my computing needs, but as the theory goes ruby is a language by and for software developors.  It totally reasonable, and a pleasure to code in, and cake to install/maintain/extend.  But it lacks support and optimization for most of what scientist want to do.  Python on the other hand is a language by and for scientists.<p>
+
+  <p>After bitching abunch about how slow my code was, I finally went ahead and wrote some c extensions:</p>
+  <pre>
+
+  /* cextensionsmodule.c */
+
+  #include <Python.h>
+
+  double _xlog2x(double d)
+  {
+    if (d <= 0)
+      return 0;
+    else
+      return d*log(d)/log(2.0);
+  }
+
+  double _p(double n, double m, double p)
+  {
+    if (n<0 || m<0 || p<0 || p>1)
+      return 0;
+    else
+      return exp(lgamma(n+1)-lgamma(n-m+1)-lgamma(m+1)+m*log(p)+(n-m)*log(1.0-p));
+  }
+
+  double _pxlog2x(double n, double m, double p)
+  {
+    return _p(n,m,p)*_xlog2x(m/n);
+  }
+
+  static PyObject* expectedentropy(PyObject* self, PyObject* args)
+  {
+    int i,m,len;
+    double N,n,h,M;
+    PyObject* obj;
+    PyObject* seq;
+    PyObject* item;
+
+    if (!PyArg_ParseTuple(args, "Odd", &obj, &N, &n ))
+      return NULL;
+
+    seq = PySequence_Fast(obj, "expected a sequence");
+    len = PySequence_Size(obj);
+
+    h=0;
+    for (i = 0; i < len; i++) {
+      item = PyList_GET_ITEM(seq, i);
+      if (PyFloat_Check(item)){
+        M = PyFloat_AsDouble(item);
+      }
+      else if (PyInt_Check(item)){
+        M = (double) PyInt_AsLong(item);
+      }
+      for(m = 1; m <= (int)( n < M ? n : M); m++){
+        h+=_pxlog2x(n,(double)m,M/N);
+      }
+    }
+
+    Py_DECREF(seq);
+    return Py_BuildValue("d",-h);
+  }
+
+  static PyMethodDef CExtensionsMethods[] = {
+    {"expectedentropy", expectedentropy, METH_VARARGS, "Calculate expected entropy."},
+    {NULL, NULL, 0, NULL}
+  };
+
+  PyMODINIT_FUNC initmyextensions(void)
+  {
+    (void) Py_InitModule("cextensions", CExtensionsMethods);
+  }
+
+</pre>
+
+  <p>To build the extension, you also need a setup file:</p>
+  <pre>
+
+  # setup.py
+
+  from distutils.core import setup, Extension
+  module1 = Extension('cextensions', sources = ['cextensionsmodule.c'])
+    
+  setup (name = 'PackageName',
+      version = '1.0',
+      description = 'This is a demo package',
+      ext_modules = [module1])
+  </pre>
+  <p>Finaly, run the following command in the terminal to build the extension.</p>
+  <pre>
+
+ money-cash$  python setup.py build
+  </pre>
+  <p>You can move the resulting .so file into the working directory when your done.  To use the extension, just include <code>import cextensions</code> in your python.  This simple extension gave me performance increases upwards of 10x.</p>
+</div>
+
 <div class="post"> <h5> JULY 20 2012 </h5>
   <p> I guess I'm on vacation, but I thought I should reblog this nice little <a href="http://aruljohn.com/info/macpasswordreset/#cmdline">post</a> about logging into someones mac when you dont have the admin password (caugh).  Fortunately it doesn't grant you immediate access to other users files.  But you do end up with admin privladges.  So maybe that access isnt so far away.
   </p>
