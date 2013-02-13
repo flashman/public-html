@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<title>GAME OF LIFE</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="Conway, Game of Life">
+<meta name="description" content="">
+<link type="text/css" rel="stylesheet" href="../../style/base.css" />
+<link type="text/css" rel="stylesheet" href="life.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/alea.js"></script>
+<script type="text/javascript" src="life.js"></script>
+</head>
+<body>
+  <div id="body" class="">
+    <div align="center">
+      <h1> GAME OF LIFE</h1>
+      <br/>
+      <h3 id"top"><span id="display" title="Click to change Initial Density"> INITIAL DENSITY=0.5</span>
+	<span id="input" style="display:none">INITIAL DENSITY=<input type="val" style="width:20pt" /></span>
+      </h3>
+      <canvas id="canvas">
+	This text is displayed if your browser does not support HTML5 Canvas.
+      </canvas>
+      <br/>
+      <h3 > 
+	<span id="start">START</span>
+	<span id="stop">STOP</span>
+	<span id="reset">RESET</span>
+	<span id="clear">CLEAR</span>
+      </h3>
+    </div>		
+    <br/>
+    <h4>NOTES:</h4>
+    <p>Simulation seems to run best, and by best I mean very good, on Safari.  I'm also a bit surprised that it doesn't run better on Chrome. </p>
+  </div>
+</body>
+</html>
