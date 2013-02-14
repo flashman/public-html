@@ -5,7 +5,7 @@ body { color: black; background-color: white;
 	font-family: "palantino","caslon","sabon","bembo",serif; }
 
 
-h1,h2,h3,h4,h5,h6,dt{ 
+h1,h2,h3,h4,h5,h6,dt,li{ 
 	font-family: "futura","univers","helvetica",sans-serif; 
 	font-weight: bold; padding: 0px; margin: 0px; }
 h1 { font-size: 40px; text-align: center}
@@ -15,6 +15,8 @@ p,ol { font-family: verdana; font-size: 14px; font-weight: normal; margin-top: 0
 a {text-decoration: none; color: #555555; }
 pre, a:hover {background-color:black; color: white;}
 div,img { margin: 0}
+ul {list-style-type:square}
+
 .page_width { width:691px; }
 
 #header {  height: 272px; background: url(../assets/trees.gif) scroll 0 -65px; position:relative }

@@ -1,0 +1,31 @@
+<hr>
+<hr>
+<h3>CS1112 SPRING 2013</h3>
+<hr>
+<hr>
+<br>
+<div class="post"><h5>FEB 13</h5> 
+  <p>
+    Today we discussed the Fibonnaci sequence 1 1 2 3 5 8 etc and showed numerically that the ratio  of terms in the sequence, \(f_{n+1}/f_n\),  converged to the golden mean: \( (1+\sqrt{5})/(2) \). The code looks something like this:
+  </p>
+  <pre>
+
+    f_old = 0; f_cur = 1; n = 1;
+    % f_cur is always the nth Fibonacci number
+    % f_cur + f_old is always the n+1st Fibonacci number.
+    while ( abs( (f_cur+f_old)/f_cur  - (1+sqrt(5))/2 ) >.000001 )
+        % Update: 
+        f_new = f_old + f_cur; 
+        f_old = f_cur; 
+        f_cur = f_new; 
+        n = n+1;
+    end
+    fprintf('golden mean: %8.5f', (f_cur+f_old)/f_cur)
+  </pre>
+  <p>
+    As I mentioned, there's a wonderful cult surounding these mathematical facts, stretching from Pythagorous to the modern day crackpot.  For the curious, here are two fun little videos on the theme.  The first is a classic, practically mandatory.  And the second is exactly what it is.  Enjoy.  
+  <ul>
+    <li><h5><a href="http://www.youtube.com/watch?v=oT_Bxgah9zc">Donald in Mathemagic Land</a></h5></li>
+    <li><h5><a href="http://www.youtu.be/eYDwWbDhCEg?t=13m40s">Ancient Knowledge Pt 2 Fibonacci Sequence, etc.</a></h5></li>
+  </ul>
+</div>

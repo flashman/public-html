@@ -25,7 +25,9 @@ $(document).ready( function(){
 	function open(newPage){
 		$(".selected").each(function(){$(this).removeClass("selected"); });
 		$("#" + newPage).addClass("selected");
-		$("#body").load( "pages/" + newPage + ".html");
+		$("#body").load( "pages/" + newPage + ".html", function(){ 
+		    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+		});
 		location.hash = "p=" + newPage;
 		//use something more like this when you adopt html5 standards 
 		//window.history.pushState("change page", newPage, newPage)
@@ -42,5 +44,4 @@ $(document).ready( function(){
 		   hashParams[d(e[1])] = d(e[2]);
 		return hashParams;
 	}
-	
 })
