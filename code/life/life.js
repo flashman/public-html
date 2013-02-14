@@ -2,15 +2,16 @@ $(document).ready( function(){
     var m = Math;
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
-    var t; // timeout for animation
+    var t; // timeout for animation\
+    var time = $("#time");
     var random = new Alea(m.random()); //a better random number generator
 
     
     //model variables
     var TIME=0;
-    var FLIP=0;
+    var BUFFER=0;
     var DENSITY = 0.5;
-    var NX = 100, NY = 100, SD= 5;
+    var NX = 100, NY = 100, SD= 4;
     var X= NX*SD, Y = NY*SD;
     
     //size canvas element
@@ -23,24 +24,28 @@ $(document).ready( function(){
     life = new Life();
    
     //----------------Simulation Interface----------------//	
-    $('#start').click(function(){
+    $('#start').click(function(event){
 	console.log("START");
+	select(event.target);
 	life.run();
     });
     
-    $('#stop').click(function(){
+    $('#stop').click(function(event){
 	console.log("STOP");
+	select(event.target);
 	clearTimeout(t);
     });
 	
-    $('#reset').click(function(){
-	console.log("RESET");
+    $('#randomize').click(function(event){
+	console.log("RANDOMIZE");
+	select(event.target);
 	clearTimeout(t);
-	life.reset();
+	life.randomize();
     });
 
-    $('#clear').click(function(){
+    $('#clear').click(function(event){
 	console.log("CLEAR");
+	select(event.target);
 	clearTimeout(t);
 	life.clear();
     });
@@ -58,38 +63,66 @@ $(document).ready( function(){
 	    $('#display').text('INITIAL DENSITY=' + DENSITY);
 	    $('#input').hide();
 	    $('#display').show();
-	    life.reset();
-	    life.run();
+//	    life.randomize();
+//	    life.run();
 	}
     });
+
+    $('#canvas').click(function(event){
+	console.log("CLICKED");
+	clicked = canvas.relMouseCoords(event);
+	life.toggle(clicked.x,clicked.y);
+    });
+    
+
+    //--------------------UI Helpers--------------------//
+    function select(obj){
+	$(".selected").each(function(){$(this).removeClass("selected"); });
+	$(obj).addClass("selected");
+    }
 
 
     //--------------------Manage Time-------------------//
     function incrementTime(){
 	TIME += 1;
-	FLIP = (FLIP+1) % 2;
+	BUFFER = (BUFFER+1) % 2;
+	time.text("TIME: " + TIME);
     }
 
 
     //--------------------Life Class--------------------//
     function Life(){    
 	cells = [];
-	reset();
+	randomize();
     
 	//--------Ising Interface----------//
 	this.run = function(){ run(); }
-	this.reset = function(){ reset(); }
+	this.randomize = function(){ randomize(); }
 	this.clear = function(){ clear(); }
+	this.toggle = function(x,y){ toggle(x,y); }
 	
 	//--------Ising Class functions--------//
 	function clear(){
 	    TIME = 0;
-	    FLIP = 0;
+	    BUFFER = 0;
+	    time.text("TIME: 0");
 	    ctx.clearRect(0, 0, X, Y);
+	    if (cells.length > 0)  {
+		for (var i=0;i<NY;i++) {
+		    for(var j=0;j<NX;j++){
+			a = ( (DENSITY-random()) > 0 ? 1 : 0)
+			cells[i][j].clear();
+		    }
+		}
+	    }
+
 	}
 	
-	function reset(){
-	    clear();
+	function randomize(){
+	    TIME = 0;
+	    BUFFER = 0;
+	    time.text("TIME: 0");
+	    ctx.clearRect(0, 0, X, Y);
 	    if (cells.length == 0){
 		for (var i=0;i<NY;i++) {
 		    cells[i] = [];
@@ -110,10 +143,17 @@ $(document).ready( function(){
 		}
 	    }
 	}
+	
+	function toggle(x,y){
+	    j = m.floor(x/SD);
+	    i = m.floor(y/SD);
+	    cells[i][j].toggle();
+	    cells[i][j].draw();	    
+	}
 		
 	function run(){
             update();
-	    t = setTimeout(run,10);
+	    t = setTimeout(run,1);
 	}
         
 	function update(){
@@ -149,7 +189,8 @@ $(document).ready( function(){
 	    this.reset = function(ss) { reset(ss); }
 	    this.alive = function() { return alive(); }
 	    this.die = function() { die(); } 
-	    this.live = function() { live(); } 
+	    this.live = function() { live(); }
+	    this.toggle = function() {toggle(); }
 	    this.update = function() { update(); }
 	    this.draw = function() { draw(); }
 	    
@@ -163,21 +204,25 @@ $(document).ready( function(){
 	    }
 	    
 	    function alive(){
-		return s[FLIP];
+		return s[BUFFER];
 	    }
 	    
 	    function die(){
-		s[(FLIP+1)%2] = 0;
+		s[(BUFFER+1)%2] = 0;
 	    }
 	    
 	    function live(){ 
-		s[(FLIP+1)%2] = 1; 
+		s[(BUFFER+1)%2] = 1; 
 	    } 
+
+	    function toggle(){
+		s[BUFFER] = (s[BUFFER] + 1)%2;
+	    }
 	    
 	    function update(){
 		var ls = getLocalState();
 		if (alive()) {
-		    if (ls == 1 || ls == 4 ){
+		    if (ls <2 || ls > 3 ){
 			die();
 		    }
 		    else {
@@ -185,7 +230,7 @@ $(document).ready( function(){
 		    }
 		}
 		else {
-		    if ( ls == 2 ){
+		    if ( ls == 3 ){
 			live();
 		    }
 		    else {
@@ -198,11 +243,15 @@ $(document).ready( function(){
 		return cells[(i-1+NY) % NY][j].alive() 
 		    + cells[ (i+1) % NY][j].alive() 
 		    + cells[i][ (j-1+NX) % NX].alive() 
-		    + cells[i][ (j+1) % NX].alive() ;
+		    + cells[i][ (j+1) % NX].alive() 
+		    + cells[(i-1+NY) % NY][ (j-1+NX) % NX ].alive() 
+		    + cells[(i-1+NY) % NY][ (j+1+NX) % NX].alive()
+		    + cells[(i+1+NY) % NY][ (j-1+NX) % NX ].alive() 
+		    + cells[(i+1+NY) % NY][ (j+1+NX) % NX].alive(); 
 	    }		
 	    
 	    function draw(){
-		if (s[FLIP] == 1 ){
+		if (s[BUFFER] == 1 ){
 		    ctx.fillStyle = "#000000"; 
 		    ctx.fillRect(SD * j ,SD * i ,SD, SD);
 		}

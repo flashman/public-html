@@ -10,15 +10,14 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script type="text/javascript" src="../../js/alea.js"></script>
 <script type="text/javascript" src="life.js"></script>
+<script type="text/javascript" src="../../js/canvasMouseCoords.js"></script>
 </head>
 <body>
   <div id="body" class="">
     <div align="center">
       <h1> GAME OF LIFE</h1>
+      <h5><span id="time">TIME: 0</span></h5>
       <br/>
-      <h3 id"top"><span id="display" title="Click to change Initial Density"> INITIAL DENSITY=0.5</span>
-	<span id="input" style="display:none">INITIAL DENSITY=<input type="val" style="width:20pt" /></span>
-      </h3>
       <canvas id="canvas">
 	This text is displayed if your browser does not support HTML5 Canvas.
       </canvas>
@@ -26,12 +25,19 @@
       <h3 > 
 	<span id="start">START</span>
 	<span id="stop">STOP</span>
-	<span id="reset">RESET</span>
+	<span id="randomize">RANDOMIZE</span>
 	<span id="clear">CLEAR</span>
       </h3>
+      <hr/>
+      <h5 class="left"><span>CONTROLS:</span></h5>
+      <br/>
+      <h5><span id="display" title="Click to change cell density"> INITIAL CELL DENSITY=0.5</span>
+	<span id="input" style="display:none">INITIAL CELL DENSITY=<input type="val" style="width:20pt" /></span>
+      </h5>
+      <br/>
     </div>		
-    <br/>
-    <h4>NOTES:</h4>
+    <hr/>
+    <h5>NOTES:</h5>
     <p>Simulation seems to run best, and by best I mean very good, on Safari.  I'm also a bit surprised that it doesn't run better on Chrome. </p>
   </div>
 </body>

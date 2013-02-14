@@ -9,11 +9,10 @@ function relMouseCoords(event){
         totalOffsetX += currentElement.offsetLeft;
         totalOffsetY += currentElement.offsetTop;
     }
-    while(currentElement = currentElement.offsetParent)
-
-    canvasX = event.pageX - totalOffsetX;
-    canvasY = event.pageY - totalOffsetY;
-
+    while(currentElement = currentElement.offsetParent){
+	canvasX = event.pageX - totalOffsetX;
+	canvasY = event.pageY - totalOffsetY;
+    }
     return {x:canvasX, y:canvasY}
 }
 

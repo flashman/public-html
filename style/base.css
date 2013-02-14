@@ -18,6 +18,8 @@ div,img { margin: 0}
 ul {list-style-type:square}
 
 .page_width { width:691px; }
+.selected { background-color:black; color: white; }
+.left { float: left; }
 
 #header {  height: 272px; background: url(../assets/trees.gif) scroll 0 -65px; position:relative }
 #header #under-header {height:127px; padding-top: 145px; background: white; opacity: 0.4;
