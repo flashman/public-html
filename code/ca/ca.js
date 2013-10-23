@@ -3,15 +3,15 @@ $(document).ready( function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
     var t; // timeout 
-    var X = 512, Y = 512, d = 1;
+    var X = 512, Y = 768, d = 1;
     canvas.setAttribute('width', ''+X)
     canvas.setAttribute('height', ''+Y)
     
-	var states = 2;
+    var states = 2;
     var nbhd = 3; //odd
-	var ruleCount = m.pow(states,nbhd);
-	var totalRules = m.pow(states, ruleCount);
-	var hist = [], hPos=-1;
+    var ruleCount = m.pow(states,nbhd);
+    var totalRules = m.pow(states, ruleCount);
+    var hist = [], hPos=-1;
 
 //-----------------ViewModel------------------------//
     $('#next').click(function(){

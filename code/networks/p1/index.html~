@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CS 6850: PS1: COAUTORSHIP NETWORK</title>
+  <link type="text/css" rel="stylesheet" href="network.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script type="text/javascript" src="coauthorship.js"></script>
+</head>
+<body>
+
+</body>
+</html>
