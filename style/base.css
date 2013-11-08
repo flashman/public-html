@@ -39,6 +39,7 @@ ul {list-style-type:square}
 #body{ min-height: 280px; padding-top: 20px }
 #body .post { padding-bottom: 10px; }
 #body .media {text-align: center; }
+#body .media img {max-width: 690px; }
 #body audio {width: 425px; }
 
 #footer { height: 53px; background: url(../assets/trees.gif) scroll 0 53px;}

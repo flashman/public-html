@@ -1,0 +1,65 @@
+<hr>
+<hr>
+<h3>CS1112 SPRING 2013</h3>
+<hr>
+<hr>
+<br>
+<div class="post"><h5>APRIL 8</h5>
+<p> Two quotes for the day.  Compare and contrast.</p>
+<p>  1. via <a href="http://blog.burningman.com/2013/03/uncategorized/in-defense-of-academia-and-why-its-good-for-burning-man/">the internet</a>
+<div class="media">
+  <iframe width="560" height="315" src="http://www.youtube.com/embed/cRmbwczTC6E" frameborder="0" allowfullscreen></iframe>
+</div>
+</p>
+<p> 2.
+<q>
+Teaching has a dismal effect on the soul. It exemplifies the badness of established artificial authority. The pedagogue has almost absolute authority over his pupils: he often beats them and insensibly he loses the sense of respect due to them as fellow human beings. He does them harm, but the harm they do him is far greater. He may easily become the all-knowing tyrant, always right, always virtuous; in any event he perpetually associates with his inferiors, the king of his company; and in a surprisingly short time alas this brands him with the mark of Cain. Have you ever known a schoolmaster fit to associate with grown men? The Dear knows I never have. They are horribly warped indeed. 
+</q>
+ --Stephen Maturin, via <a href="http://people.reed.edu/~jerry/">Jerry Shurman</a>
+</p>
+</div>
+</br>
+<div class="post"><h5>MARCH 27</h5>
+<p> We begin the discussion of strings, which in this course amounts to the discussion of DNA.  For our purposes, we will simply think about DNA as strings  made out of the four letters 'A' 'T' 'G' and 'C'.  So somthing like 'ATGCAGGACCTGC...'.  In reality, the story is much more interesting.  A strand of DNA is made out of four different kinds of nucleotides: Adenine, Thymine, Guanine, and Cytosine. (Hence the four letters.) These nucleotides stick together to form long (LONG)  chains.  And each chain is stiched, nucleotide by nucleotide, to a corresponding chain, with sugar molecules.  The corresponding chain is precisely the reverse complement that we constructed in class.  This two chain object is our lovable double helix, storeing though its particular ordering of base pairs(the genes), all the information needed to create and operate every cell in our body. With current technology, it is actually pretty easy to read off all the base pairs in a real strand of DNA.  The more interesting, and harder, question is: how does this incoded information actually become physically meaningful within a livinig thing. More precisely, how is a gene actually expressed? 
+</p>
+
+<p>
+As I ask this question, what I really want to emphasize is the physical nature of this question. The process of translating a microscopic chain of molecules into eye color is fundementally a physical process.  There is no omnipotent overlord reading my DNA, tells my cells to do this or that.  There is just a bag of water full of dna and a bunch of other molecules, sloshing around ar random.  And yet through this sloshing, the structures of these objects are just right so that interesting things happen... Some of the molecules react (with the help of some other molecules) with substrands of DNA (copied over to RNA) to build up particular proteins.  Now proteins are just other more complicated molecules.  But unlike the DNA which, doesn't really do much physically, proteins have complicated physical structure.  And through this physical structure are capable of doing physical tasks...most of the physical tasks that need to be carried out within the life time of a cell.  But it turns out that much of what makes a cell work is not determined by individual proteins, but through a complicated network of protein-protein interactions.  Yet in spite of the physical nature of the process, and the combinatorial explossion of things that could happen...and go wrong...life carries on.  
+</p>
+<p>But for better or worse, everything you will need to know about DNA in this course you learned from Jurassic Park.  For a slightly more complete take on the subject, you might start with <a href="http://en.wikipedia.org/wiki/DNA"> wikipedia </a>.  
+</p>
+<div class="media">
+  <iframe width="560" height="315" src="http://www.youtube.com/embed/iMsJe3TymqY" frameborder="0" allowfullscreen></iframe>
+</div>
+</br>
+<p>
+*By the way, I am not really a biologist, so if you see any obvious problems or glaring omisions with my description, pleas let me know.
+</p>
+
+</div>
+
+<div class="post"><h5>FEB 13</h5> 
+  <p>
+    Today we discussed the Fibonnaci sequence 1 1 2 3 5 8 etc and showed numerically that the ratio  of terms in the sequence, \(f_{n+1}/f_n\),  converged to the golden mean: \( (1+\sqrt{5})/(2) \). The code looks something like this:
+  </p>
+  <pre>
+
+    f_old = 0; f_cur = 1; n = 1;
+    % f_cur is always the nth Fibonacci number
+    % f_cur + f_old is always the n+1st Fibonacci number.
+    while ( abs( (f_cur+f_old)/f_cur  - (1+sqrt(5))/2 ) >.000001 )
+        % Update: 
+        f_new = f_old + f_cur; 
+        f_old = f_cur; 
+        f_cur = f_new; 
+        n = n+1;
+    end
+    fprintf('golden mean: %8.5f', (f_cur+f_old)/f_cur)
+  </pre>
+  <p>
+    As I mentioned, there's a wonderful cult surounding these mathematical facts, stretching from Pythagorous to the modern day crackpot.  For the curious, here are two fun little videos on the theme.  The first is a classic, practically mandatory.  And the second is exactly what it is.  Enjoy.  
+  <ul>
+    <li><h5><a href="http://www.youtube.com/watch?v=oT_Bxgah9zc">Donald in Mathemagic Land</a></h5></li>
+    <li><h5><a href="http://www.youtu.be/eYDwWbDhCEg?t=13m40s">Ancient Knowledge Pt 2 Fibonacci Sequence, etc.</a></h5></li>
+  </ul>
+</div>

@@ -1,3 +1,13 @@
+<div class="post"><h5>Sep 25 2013</h5>
+  <p>I'm taking a course on information networks this fall.  While the work focuses mosty on the theory and the algorithms, wedo spend a lot of time processing real networks.  For our first assignment, we generated a co-authorship network from tens of thousands of bibliographic references, and computed things like the degree distribution, connected component size distribution, and pathlength distribution.  As I've moved more toward visualization, I thought it would be fun do try out s3.js, a fancy visualization library written by some people at NYTimes, to try and visualize what exactly we were computing on. Turns out that the library is really nice, and really easy to get working.  And while it can't do real-time dynamic rendering for the full set of node (on the order of 50000), it does handle a few thousand quite easily.  If you click on the image, you can check out the dynamic version.  It's only a first pass at the problem, but overall encouraging.  Assuming I find more time in my life, I think I'll try to turn it into a stand-alone website for network exploration, maybe.</p>
+  
+	<div class="media">
+	  <a href="code/networks/p1">
+		<img src="assets/blog/network.png"></img>
+	  </a>
+	</div>
+</div>
+
 <div class="post"> <h5>May 30 2013</h5>
   <p>  &quot;Barton Hall was built in 1914 and 1915 and was originally designed as a drill hall for the Department of Military Science. Upon its completion it was often referred to as the New Armory. It currently serves an on-campus field house. For a long time, it was the largest un-pillared room in existence. The interior of the building covers almost 2 acres (8,100 m2), and includes a 1/8 mile indoor track.&quot;
   </p>
@@ -19,7 +29,7 @@
 
   /* cextensionsmodule.c */
 
-  #include <Python.h>
+  #include &lt;Python.h&gt;
 
   double _xlog2x(double d)
   {
@@ -79,7 +89,7 @@
     {NULL, NULL, 0, NULL}
   };
 
-  PyMODINIT_FUNC initmyextensions(void)
+  PyMODINIT_FUNC initcextensions(void)
   {
     (void) Py_InitModule("cextensions", CExtensionsMethods);
   }
@@ -104,7 +114,7 @@
 
  money-cash$  python setup.py build
   </pre>
-  <p>You can move the resulting .so file into the working directory when your done.  To use the extension, just include <code>import cextensions</code> in your python.  This simple extension gave me performance increases upwards of 10x.</p>
+  <p> This command creates a new build directory with subdirectories containing .so files for a handful of possible hardware configurations. Move the .so file for your system into the working directory and your done.  To use the extension, just include <code>import cextensions</code> in your python.  This simple extension gave me performance increases upwards of 10x.</p>
 </div>
 
 <div class="post"> <h5> JULY 20 2012 </h5>
